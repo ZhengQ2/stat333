@@ -43,8 +43,8 @@ so, independence means:
 Suppose we have a sequence of independent trials and a sequence of events $E_1, E_2, \dots$.
 Now: $E_i$ only depends on $i$th trial $\implies$:
     1. all events $E_1, E_2, \dots$ are independent
-    2. $P(\bigcap_{i=1}^{\infty} E_i)= \prod_{i=1}^{\infty} P(E_i)$
-    2. $P(\bigcap_{i=1}^{m} E_i)= \prod_{i=1}^{m} P(E_i)$
+    2. $P\left(\displaystyle \bigcap_{i=1}^{\infty} E_i\right)= \prod_{i=1}^{\infty} P(E_i)$
+    2. $P\left(\displaystyle \bigcap_{i=1}^{m} E_i\right)= \prod_{i=1}^{m} P(E_i)$
 
 
 
@@ -55,7 +55,7 @@ Find:
     >>Solutions:
     >>Let $E$ = "3" in the sequence
     >>$E^C$ = No "3" in the sequence
-    >>Then, $$P(E^C) = P(1\text{st} \neq 3 \cap 2\text{nd} \neq 3 \cap 3\text{rd} \neq 3 \cap \dots) \\ = \prod_{i=1}^\infty P(i\text{th} \neq 3) = \frac{5}{6}^\infty = 0$$
+    >>Then, $$P(E^C) = P(1\text{st} \neq 3 \cap 2\text{nd} \neq 3 \cap 3\text{rd} \neq 3 \cap \dots) \\ = \displaystyle \prod_{i=1}^\infty P(i\text{th} \neq 3) = \frac{5}{6}^\infty = 0$$
 >2. $P($getting a "333" in the sequence of numbers$)$
 Here we say "333” occurs on the $n$th toss if the $(n-2)$th outcome is "3”, $(n-1)$th outcome is "3”, and $n$th outcome is "3”.
 >> Solution: Let $F$ = "333" in the sequence
