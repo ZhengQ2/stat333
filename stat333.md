@@ -45,6 +45,7 @@ Now: $E_i$ only depends on $i$th trial $\implies$:
     1. all events $E_1, E_2, \dots$ are independent
     2. $P\left(\displaystyle \bigcap_{i=1}^{\infty} E_i\right)= \prod_{i=1}^{\infty} P(E_i)$
     2. $P\left(\displaystyle \bigcap_{i=1}^{m} E_i\right)= \prod_{i=1}^{m} P(E_i)$
+    ![image](images/Screenshot%202023-09-12%20at%2012.50.59%20PM.png)
 
 
 
@@ -61,12 +62,111 @@ Here we say "333” occurs on the $n$th toss if the $(n-2)$th outcome is "3”, 
 >> Solution: Let $F$ = "333" in the sequence
 >> $F^C$ = No "333" in the sequence
 >> Idea: Create independent blocks of 3 tosses.
->> Note: $F^C$ implies that $\text{block }1 \neq "333", \text{block }2 \neq "333", \text{block }3 \neq "333", \dots \implies$ $F^C \subset \{\text{block }1 \neq "333", \text{block }2 \neq "333", \text{block }3 \neq "333", \dots\}$
+>> ![image](images/Screenshot%202023-09-12%20at%2012.53.14%20PM.png)
+>> Note: $F^C$ implies that $\text{block }1 \neq "333", \text{block }2 \neq "333", \text{block }3 \neq "333", \dots \\ \implies F^C \subset \{\text{block }1 \neq "333", \text{block }2 \neq "333", \text{block }3 \neq "333", \dots\} \\ \implies P(F^C) \leq P(\text{block }1 \neq "333" \& \text{ block }2 \neq "333" \& \text{ block }3 \neq "333", \dots)\\ = \displaystyle \prod_{i=1}^{\infty}P(i\text{th block } \neq \text{"333"}) \\ = \prod_{i=1}^{\infty}1-P(i\text{th block } = \text{"333"})\\=\prod_{i=1}^{\infty}1-\left(\frac{1}{6}\right)^3=\frac{215}{216}^{\infty}=0$
+
 
 
 >Example 1.2:
 A coin is continually and independently tossed, where the probability of head (H) on a toss is $1/2$.
 Find:
 >1. $P(1$st two tosses give "HH"$)$
->2. $P(1$st two tosses give "TH"$)$
+Solution: $P(1$st two tosses give "HH"$) = P(H)\cdot P(H) = \frac{1}{4}$
+>2. $P(1$st two tosses give "TH"$)$TH"$) = P(T)\cdot P(H) = \frac{1}{4}$
 >3. $P($"TH" occurs before "HH"$)$
+Solution: $P(1$st two tosses give "
+Solution: 
+    Case 1: Consider 1st outcome is "T", then "TH" occurs before "HH".
+    Since to observe "TH", we need 1 "H", but to observe "HH", we need 2 "H"s.
+    $P(\text{Case 1}) = \frac{1}{2}$
+    Case 2: Consider 1st outcome is "H", 2nd outcome is "T", then "TH" occurs before "HH".
+    $P(\text{Case 2}) = \frac{1}{4}$
+    Case 3: Consider 1st outcome is "H", 2nd outcome is "H", then "HH" occurs before "TH".
+    $P(\text{Case 3}) = \frac{1}{4}$
+    $\implies P(\text{“TH” occurs before “HH”}) = P(\text{Case 1}) + P(\text{Case 2}) = \frac{3}{4}$
+
+- Conditional Probability
+Suppose $E$ and $F$ are two events with $P(F) > 0$. Then
+$$P(E|F)=\frac{P(E \cap F)}{P(F)}$$
+where $P(E|F)$ is the conditional probability, $P(E \cap F)$ is the joint probability, and $P(F)$ is the marginal probability.
+    - Result 1: $P(E\cap F) = P(E|F)P(F)$ (Multiplication Rule)
+    - Result 2: If $E$ and $F$ are independent, then $P(E|F) = P(E)$, i.e. conditional probability is the same as marginal probability.
+    Proof idea: (not required) Use definition of independent and conditional.
+    - Bayer's Formula:
+        Suppose we have a sequence of events $F_1, F_2, \dots$ such that:
+        1. $P(F_i) > 0$ for all $i$
+        2. $F_i \cap F_k = \emptyset$ for all $i \neq j$
+        3. $\bigcup_{i=1}^{\infty} F_i = S$
+
+        Then, for any event $E$,
+        1. $P(E) = \displaystyle \sum_{i=1}^{n} P(E\cap F_i) = \sum_{i=1}^{n} P(E|F_i)P(F_i)$ (Law of Total Probability)
+        ![image](images/IMG_C52806B63214-1.jpeg)
+        2. $P(F_k|E) = \displaystyle \frac{P(E\cap F_k)}{P(E)} = \frac{P(E|F_k)P(F_k)}{\sum_{i=1}^{n} P(E|F_i)P(F_i)}$ (Bayes' Formula)
+
+> Example 1.3 (Monte Hall Problem):
+> - There are three doors (say $A$, $B$, and $C$), behind which there are 2 goats and 1 car.
+> - Monty knows the location of the car, but you do not.
+> - You select a door at random (say $A$) and at this point your chance of winning the prize is $\frac{1}{3}$.
+> - Then Monty opens one of the remaining two doors, either door $B$ or door $C$, to reveal a goat.
+>
+> Find $P(\text{winning the car if you switch the door})$.
+> Method 1:
+>
+>| |A|B|C| |
+>|---|---|---|---|---|
+>|Case 1|G|C|G|Monty will open door C|
+>|Case 2|G|G|C|Monty will open dooor B|
+>|Case 3|C|G|G|Monty will open either door B or door C
+>
+>$P(\text{winning if switch})=P(\text{Case 1})+P(\text{Case 2})=\frac{2}{3}$
+>
+> Method 2: Conditional Probability Idea
+Suppose you choose door A and Monty opens door B (Event $E$).
+Let $F_k = \text{car is behind door } k, k = A,B,C$
+Then, $P(F_A) = P(F_B) = P(F_C) = \frac{1}{3}$
+$P(\text{win if switch})=P(F_C|E)\\ = \frac{P(E|F_C)P(F_C)}{P(E|F_A)P(F_A)+P(E|F_B)P(F_B)+P(E|F_C)P(F_C)} \\ =\frac{1(\frac{1}{3})}{\frac{1}{2}(\frac{1}{3})+1(\frac{1}{3})} = \frac{2}{3}$
+
+### 1.2 Random Variables (r.v.s)
+- Definition of rv
+rv is a function defined on sample space to real line.
+$$X: S \rightarrow \mathbb{R}$$
+- Two types of rv
+    1. Discrete rv: all possible values are at most countable. (e.g. Binomial, Poisson)
+    2. Continuous rv: all possible values contain an interval (e.g. Uniform)
+- Review of important rvs:
+    - Bernoulli Trials:
+        1. Each trial has 2 outcomes: success (S) or failure (F)
+        2. All trials are independent
+        3. Probability of "S" on each trial is the same:
+            $$P(\text{S}) = p, P(\text{F}) = 1-p$$
+        - Bernoulli distribution: $\text{Bernoulli}(p)$
+            Let $$I_i = \begin{cases}1 & \text{if "s" appears on the } i\text{th trial}\\0 & \text{otherwise}\end{cases}$$
+            $P(I_i=1)=p$, $P(I_i=0)=q=1-p$, then $I_1, I_2, \dots$ are a sequence of iid (independent identically distributed) Bernoulli rvs.
+        - Binomial rvs: $\text{Bin}(n,p)$
+            $X = \text{\# of "S"s in } n \text{ bernoulli trials} \sim \text{Bin}(n,p)$ where $n$ is the number of trials and $p$ is the probability of success.
+            1. Range: $\{0,1,2,\dots,n\}$
+            2. Probability mass function (pmf): $P(X=k) = \binom{n}{k}p^k(1-p)^{n-k}$ for $k=0,1,2,\dots,n$
+            3. Result 1: $X = \displaystyle \sum_{i=1}^{n} I_i$
+            4. Result 2: If $X_1 \sim \text{Bin}(n_1,p) \text{ and } X_2 \sim \text{Bin}(n_2,p)$, and both of them are independent, then $X_1+X_2 \sim \text{Bin}(n_1+n_2,p)$.
+            ![image](images/image01.png)
+            Then, $x_1+x_2=$ # of "s" in $n_1+n_2$ trials $\sim \text{Bin}(n_1+n_2,p)$
+            Independent: No overlap between first $n_1$ trials and next $n_2$ trials.
+
+>Example 1.4 (Geometric rv example):
+A fair coin is tossed repeatedly and independently. The objective is to observe the 1 st head. Let $X$ be the corresponding waiting time. Suppose we get 6 tails in the first 6 tosses.
+Note $E(\text{Geo}(p))=\frac{1}{p}$.
+Find:
+>1. $P (X=10 |\text{ the first 6 tosses give 6 tails})$.
+>2. $E (X|\text{ the first 6 tosses give 6 tails})$.
+
+>Example 1.5 (Negative Binomial rv example)
+A fair coin is tossed repeatedly and independently. The objective is to observe the two heads in total. Let $X$ be the corresponding waiting time.
+Note $E(\text{Geo}(p))=\frac{1}{p}$.
+Find:
+>1. $E (X|\text{the first 3 tosses give “HTT”})$.
+>2. $E (X|\text{the first 3 tosses give “TTT”})$.
+
+>Example 1.6 (Exponential rv example)
+Suppose waiting time ($X$) for customers coming to Tim Hortons (T.H.) follows $\text{Exp}(2)$. Here 1 unit time = 1 minute. In the first 3 minutes, there is no customer.
+>(a) Find the probability of no customer in the first 5 minutes.
+>(b) $E (X|\text{no customer in the first 3 minutes})$.
