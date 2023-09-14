@@ -71,11 +71,11 @@ Here we say "333” occurs on the $n$th toss if the $(n-2)$th outcome is "3”, 
 A coin is continually and independently tossed, where the probability of head (H) on a toss is $1/2$.
 Find:
 >1. $P(1$st two tosses give "HH"$)$
-Solution: $P(1$st two tosses give "HH"$) = P(H)\cdot P(H) = \frac{1}{4}$
->2. $P(1$st two tosses give "TH"$)$TH"$) = P(T)\cdot P(H) = \frac{1}{4}$
+>>Solution: $P(1$st two tosses give "HH"$) = P(H)\cdot P(H) = \frac{1}{4}$
+>2. $P(1$st two tosses give "TH"$)$
+>>Solution: $P(1$st two tosses give "$TH"$) = P(T)\cdot P(H) = \frac{1}{4}$
 >3. $P($"TH" occurs before "HH"$)$
-Solution: $P(1$st two tosses give "
-Solution: 
+>>Solution: 
     Case 1: Consider 1st outcome is "T", then "TH" occurs before "HH".
     Since to observe "TH", we need 1 "H", but to observe "HH", we need 2 "H"s.
     $P(\text{Case 1}) = \frac{1}{2}$
@@ -110,17 +110,17 @@ where $P(E|F)$ is the conditional probability, $P(E \cap F)$ is the joint probab
 > - Then Monty opens one of the remaining two doors, either door $B$ or door $C$, to reveal a goat.
 >
 > Find $P(\text{winning the car if you switch the door})$.
-> Method 1:
->
->| |A|B|C| |
->|---|---|---|---|---|
->|Case 1|G|C|G|Monty will open door C|
->|Case 2|G|G|C|Monty will open dooor B|
->|Case 3|C|G|G|Monty will open either door B or door C
->
->$P(\text{winning if switch})=P(\text{Case 1})+P(\text{Case 2})=\frac{2}{3}$
->
-> Method 2: Conditional Probability Idea
+>> Method 1:
+>>
+>>| |A|B|C| |
+>>|---|---|---|---|---|
+>>|Case 1|G|C|G|Monty will open door C|
+>>|Case 2|G|G|C|Monty will open dooor B|
+>>|Case 3|C|G|G|Monty will open either door B or door C
+>>
+>>$P(\text{winning if switch})=P(\text{Case 1})+P(\text{Case 2})=\frac{2}{3}$
+>>
+>> Method 2: Conditional Probability Idea
 Suppose you choose door A and Monty opens door B (Event $E$).
 Let $F_k = \text{car is behind door } k, k = A,B,C$
 Then, $P(F_A) = P(F_B) = P(F_C) = \frac{1}{3}$
@@ -146,27 +146,84 @@ $$X: S \rightarrow \mathbb{R}$$
             $X = \text{\# of "S"s in } n \text{ bernoulli trials} \sim \text{Bin}(n,p)$ where $n$ is the number of trials and $p$ is the probability of success.
             1. Range: $\{0,1,2,\dots,n\}$
             2. Probability mass function (pmf): $P(X=k) = \binom{n}{k}p^k(1-p)^{n-k}$ for $k=0,1,2,\dots,n$
-            3. Result 1: $X = \displaystyle \sum_{i=1}^{n} I_i$
+            3. Result 1: $X = \displaystyle \sum_{i=1}^{n} I_i$, where $I_1,..,I_n$are iid Bernoulli rvs.
+            ![image](images/IMG_6589.jpeg)
             4. Result 2: If $X_1 \sim \text{Bin}(n_1,p) \text{ and } X_2 \sim \text{Bin}(n_2,p)$, and both of them are independent, then $X_1+X_2 \sim \text{Bin}(n_1+n_2,p)$.
             ![image](images/image01.png)
             Then, $x_1+x_2=$ # of "s" in $n_1+n_2$ trials $\sim \text{Bin}(n_1+n_2,p)$
             Independent: No overlap between first $n_1$ trials and next $n_2$ trials.
+        - Geometric rvs: $\text{Geo}(p)$
+            (1st discrete waiting time rv)
+            $X = \text{\# of trials to get 1st "s" in the sequence of Bernoulli trials}$ (including the trial to observe 1st "s").
+            e.g.
+            ![image](images/IMG_6590.jpeg)
+            1. Range: $\{1,2,3,\dots\}$
+            2. pmf: $P(X=k) = (1-p)^{k-1}p$ for $k=1,2,3,\dots$
+            $E(X)=\frac{1}{p}$
+            3. No-memory property: 
+                $P(X>n+m|X>m) = P(X-m>n|X>m) = P(X>n)$ for $k,j=1,2,3,\dots$
+                ![image](images/IMG_6591.jpeg)
+                Formula tells us: Given that we do not observe Event "s", the remaining time $\sim \text{Geo}(p)$., same as the original time.
 
->Example 1.4 (Geometric rv example):
-A fair coin is tossed repeatedly and independently. The objective is to observe the 1 st head. Let $X$ be the corresponding waiting time. Suppose we get 6 tails in the first 6 tosses.
-Note $E(\text{Geo}(p))=\frac{1}{p}$.
-Find:
->1. $P (X=10 |\text{ the first 6 tosses give 6 tails})$.
->2. $E (X|\text{ the first 6 tosses give 6 tails})$.
+                >Example 1.4 (Geometric rv example):
+                A fair coin is tossed repeatedly and independently. The objective is to observe the 1 st head. Let $X$ be the corresponding waiting time. Suppose we get 6 tails in the first 6 tosses.
+                Note $E(\text{Geo}(p))=\frac{1}{p}$.
+                >>i.e., $X \sim \text{Geo}(p=\frac{1}{2})$.
+                ![image](images/IMG_6592.jpg)
+                >
+                >Find:
+                >1. $P (X=10 |\text{ the first 6 tosses give 6 tails})$.
+                >>Solution: 
+                $P (X=10 |\text{ the first 6 tosses give 6 tails})\\=P(\text{remainning time}) \\= (1-p)^{4-1}p\\=\left(1-\frac{1}{2}\right)^{4-1}\frac{1}{2}\\=\frac{1}{16}$
+                >2. $E (X|\text{ the first 6 tosses give 6 tails})$.
+                >>Solution:
+                $E (X|\text{ the first 6 tosses give 6 tails})\\=E(6+\text{remainning time})\\=6+\frac{1}{p}\\=8$ 
 
->Example 1.5 (Negative Binomial rv example)
-A fair coin is tossed repeatedly and independently. The objective is to observe the two heads in total. Let $X$ be the corresponding waiting time.
-Note $E(\text{Geo}(p))=\frac{1}{p}$.
-Find:
->1. $E (X|\text{the first 3 tosses give “HTT”})$.
->2. $E (X|\text{the first 3 tosses give “TTT”})$.
+            - Negtive Binomial $\text{NegBin}(r,p)$
+                1. Range: $\{r,r+1,r+2,\dots\}$
+                2. pmf: $P(X=k) = \binom{k-1}{r-1}p^r(1-p)^{k-r}$ for $k=r,r+1,r+2,\dots$（not required)
+                3. Property: Let $X_1 = \text{Waiting time to observe 1st "s"},\\ X_2 = \text{Waiting time to observe 2nd "s" after 1st "s"},\\ ...,\\ X_r=\text{Waiting time to observe } r\text{th "s" after }  (r-1)\text{th "s"}$
+                $X = \displaystyle \sum_{i=1}^{r} X_i \sim \text{NegBin}(r,p)$: $X_1,...X_r$ are iid $\text{Geo}(p)$ rvs.
 
->Example 1.6 (Exponential rv example)
-Suppose waiting time ($X$) for customers coming to Tim Hortons (T.H.) follows $\text{Exp}(2)$. Here 1 unit time = 1 minute. In the first 3 minutes, there is no customer.
->(a) Find the probability of no customer in the first 5 minutes.
->(b) $E (X|\text{no customer in the first 3 minutes})$.
+                >Example 1.5 (Negative Binomial rv example)
+                A fair coin is tossed repeatedly and independently. The objective is to observe the two heads in total. Let $X$ be the corresponding waiting time.
+                Note $E(\text{Geo}(p))=\frac{1}{p}$.
+                Find:
+                >1. $E (X|\text{the first 3 tosses give “HTT”})$.
+                >>Solution: 
+                $E (X|\text{the first 3 tosses give “HTT”}) \\=E(3+\text{remainning time})\\=3+\frac{1}{p}\\=3+2\\=5$
+                >2. $E (X|\text{the first 3 tosses give “TTT”})$.
+                >>Solution:
+                $E (X|\text{the first 3 tosses give “TTT”}) \\=E(3+\text{remainning time of } X_1+X_2)\\=3+\frac{1}{p}+\frac{1}{p}\\=7$
+            
+            - Poisson r.v. $\text{Pois}(\lambda)$
+                Suppose $X \sim \text{Pois}(\lambda)$
+                1. Range: $\{0,1,2,\dots\}$
+                2. pmf: $P(X=k) = \frac{\lambda^ke^{-\lambda}}{k!}$ for $k=0,1,2,\dots$
+                $\lambda =$ rate parameter / $E(X)=\lambda$
+                3. Property:
+                If $X_1 \sim \text{Pois}(\lambda_1)$ and $X_2 \sim \text{Pois}(\lambda_2)$, and both of them are independent, then $X_1+X_2 \sim \text{Pois}(\lambda_1+\lambda_2)$.
+            
+            - Exponential r.v.: $\text{Exp}(\lambda)$
+                [continuous waiting time rv]
+                1. probability density function (pdf): $f(x) = \begin{cases}\lambda e^{-\lambda x} & x > 0\\0 & \text{o.w.}\end{cases}$
+                2. $\lambda =$ rate parameter / $E(X)=\frac{1}{\lambda}$
+                3. Tail prob: $P(X>t)=e^{-\lambda t}=\int_t^{\infty}\lambda f(x)dx$ for $t>0$
+                4. No memory property: $P(X>t+s|X>s)=P(\text{remaining time}>t|X>s)=P(X>t)$ for $s,t>0$
+                Meaning: Given that we do not observe Event "s", the remaining time $\sim \text{Exp}(\lambda)$, same as the original time.
+
+                >Example 1.6 (Exponential rv example)
+                Suppose waiting time ($X$) for customers coming to Tim Hortons (T.H.) follows $\text{Exp}(2)$. Here 1 unit time = 1 minute. In the first 3 minutes, there is no customer.
+                >> $\lambda = 2$, $X>3$.
+                >
+                >(a) Find the probability of no customer in the first 5 minutes.
+                >> Solution: $P(X>5|X>3)=P(X>2)=e^{-4}$
+                >
+                >(b) $E (X|\text{no customer in the first 3 minutes})$.
+                >> Solution: $E (X|\text{no customer in the first 3 minutes}) \\=E(3+\text{remainning time})\\=3+\frac{1}{\lambda}\\=3+\frac{1}{2}\\=3.5$
+### 1.3 Expectation and Variance
+- Discrete r.v. X
+    Range: $\{x_1,x_2,\dots\}$
+    $E(X) = \displaystyle \sum_{i=1}^{\infty} x_i P(X=x_i)$ = value * probability
+    >e.g. $X \sim \text{Bernoulli}(p)$, Find $E(X)$.
+    >Solution: $P(X=1)=p$, $P(X=0)=1-p$, $E(X)=1\cdot p+0\cdot(1-p)=p$
