@@ -73,7 +73,7 @@ Find:
 >1. $P(1$st two tosses give "HH"$)$
 >>Solution: $P(1$st two tosses give "HH"$) = P(H)\cdot P(H) = \frac{1}{4}$
 >2. $P(1$st two tosses give "TH"$)$
->>Solution: $P(1$st two tosses give "$TH"$) = P(T)\cdot P(H) = \frac{1}{4}$
+>>Solution: $P(1$st two tosses give "TH$") = P(T)\cdot P(H) = \frac{1}{4}$
 >3. $P($"TH" occurs before "HH"$)$
 >>Solution: 
     Case 1: Consider 1st outcome is "T", then "TH" occurs before "HH".
@@ -222,8 +222,72 @@ $$X: S \rightarrow \mathbb{R}$$
                 >(b) $E (X|\text{no customer in the first 3 minutes})$.
                 >> Solution: $E (X|\text{no customer in the first 3 minutes}) \\=E(3+\text{remainning time})\\=3+\frac{1}{\lambda}\\=3+\frac{1}{2}\\=3.5$
 ### 1.3 Expectation and Variance
-- Discrete r.v. X
+- Expectation of Discrete r.v.
     Range: $\{x_1,x_2,\dots\}$
     $E(X) = \displaystyle \sum_{i=1}^{\infty} x_i P(X=x_i)$ = value * probability
     >e.g. $X \sim \text{Bernoulli}(p)$, Find $E(X)$.
     >Solution: $P(X=1)=p$, $P(X=0)=1-p$, $E(X)=1\cdot p+0\cdot(1-p)=p$
+- Expectation of Continuous r.v.
+    $x$ has pdf $f(x)$
+    $E(X) = \displaystyle \int_{-\infty}^{\infty} x f(x) dx$
+- General case: $g(x)$ is a function of $x$.
+    $E(g(X))= \begin{cases}\displaystyle \sum_{i=1}^{\infty} g(x_i) P(X=x_i) & \text{if } X \text{ is discrete}\\ \displaystyle \int_{-\infty}^{\infty} g(x) f(x) dx & \text{if } X \text{ is continuous}\end{cases}$
+    where $g(X)$ is a new r.v.
+    >e.g. $X \sim \text{Bernoulli}(p)$, Find $E(X^2)$.
+    >>Solution: Consider $g(x)=x^2$, then
+    >>$$E(X^2)=0^2P(X-0)+1^2P(X=1)=0^2\cdot(1-p)+1^2\cdot p=p=E(X)$$Therefore, $X^2=X$ for $X \sim \text{Bernoulli}(p)$.
+- Variance
+    $Var(X) = E(X^2) - [E(X)]^2$
+    > e.g. $X \sim \text{Bernoulli}(p)$, Find $Var(X)$.
+    >>Solution: $Var(X)=E(X^2)-[E(X)]^2=p-p^2=p(1-p)=P(X=1)+P(X=0)$
+- Properties: 
+    1. $E(\sum_{i=1}^{n} a_i X_i) = \sum_{i=1}^{n} a_i E(X_i)$ [linearity]
+        $a_1,...,a_n$ are constants, $X_1,...,X_n$ are r.v.s
+    2. If $X_1,...,X_n$ are independent, then $Var(\sum_{i=1}^{n} a_iX_i) = \sum_{i=1}^{n} Var(a_iX_i)=\sum_{i=1}^{n} a_i^2Var(X_i)$
+        [Aside: $Var(aX+b)=Var(aX)=a^2Var(X)$]
+        >e.g. If $X_1$ and $X_2$ are independent, then
+        >$Var(X_1+X_2)=Var(X_1)+Var(X_2)$, and 
+        $Var(X_1-X_2)=Var(X_1)+Var(X_2)$
+    3. In general:
+        $Var(\sum_{i=1}^{n} a_i X_i) = \sum_{i=1}^{n} a_i^2 Var(X_i) + \sum_{i\neq j} a_ia_jCov(X_i,X_j)$
+        >Aside: $Cov(X,Y) = E(XY)-E(X)E(Y)$, and if $X$ and $Y$ are independent, then $Cov(X,Y)=0$.
+        Question: If $Cov(X,Y)=0$, are $X$ and $Y$ independent?
+
+        $Var(\sum_{i=1}^{n} a_i X_i) = \sum_{i=1}^{n} a_i^2 Var(X_i) + 2 \sum_{i < j} a_ia_jCov(X_i,X_j)$
+        >e.g. 
+        $Var(X_1+X_2)=Var(X_1)+Var(X_2)+2Cov(X_1,X_2)$, and
+        $Var(X_1+X_2+X_3) = Var(X_1)+Var(X_2)+Var(X_3)+2Cov(X_1,X_2)+2Cov(X_1,X_3)+2Cov(X_2+X_3)$
+### 1.4 Indicator r.v.
+- Indicator r.v.: Only two possible values $0$ and $1$
+    For a given event $A$, we define $I_A=\begin{cases} 1&\text{if } A \text{ occurs}\\0&\text{otherwise}\end{cases}$
+    Suppose $P(A)=0$, then $P(I_A=1)=p$, $P(I_A=0)=1-p=q$.
+    By Bernoulli distribution, $E(I_A) = P(I_A=1) = p$ and $Var(I_A)=P(I_A=1)P(I_A=0)=p(1-p)$
+    >e.g. Suppose $X \sim \text{Bin}(n,p)$, find $E(X)$ and $Var(X)$
+    >>Solution: (1) Def, (2)Mgf
+    >> $X=\sum_{i=1}^nI_i: I_1,...,I_n \text{ are iid Bernoulli}(p) \text{ r.v.}$
+    >> Therefore $E(X) = \sum_{i=1}^nE(I_i)=np$ [linearlity], and
+    >> $Var(X)=Var\left(\sum_{i=1}^nI_i\right)=\sum_{i=1}^nVar(I_i)=np(1-p)$ [$I_1,...,I_n$ are independent]
+
+> Example 1.7
+>- Suppose we have two boxes: red box and black box.
+>- In red box, there are 4 red balls and 6 black balls.
+>- In the black box, there are 6 red balls and 4 black balls.
+>- An experiment is conducted as follows.
+>   - At the first step, a fair coin is tossed.
+>   - If it shows head, then you randomly choose a ball in the red box, record the color and put it back; else, you randomly choose a ball in the black box, record the color and put it back.
+>   - At the second step, you randomly choose a ball from the box, which has the same color as the ball you chosen at the first step.
+>
+>Let X be the number of red balls you draw in the first two steps. Find E(X) and Var(X).
+>> Solution: $X\in \{0,1,2\}$. Find $P(X=0), P(X=1), P(X=2)$.
+Let $I_i = \begin{cases} 1&\text{if we get } R \text{ ball in }i \text{th step}\\0&\text{otherwise}\end{cases}$, then $X=I_1+I_2$
+$P(X_1=1)=P(1\text{st ball}=R)=P(1\text{st ball}=R|H)P(H)+P(1\text{st ball}=R|T)P(T)=0.4\cdot \frac{1}{2}+0.6\cdot \frac{1}{2}\cdot \frac{1}{2}=0.5$
+$P(X_2=1)=P(2\text{nd ball}=R)=P(2\text{nd ball}=R|H)P(H)+P(2\text{nd ball}=R|T)P(T)=0.4\cdot \frac{1}{2}+0.6\cdot \frac{1}{2}\cdot \frac{1}{2}=0.5$
+Therefore, $E(X) = E(I_1)+E(I_2)=P(I_1=1)+P(I_2=2)=0.5+0.5=1$
+Here, $I_1I_2=\begin{cases} 1&I_1=I-2=1\text{ or 1st = } R \text{ and 2nd = }R\\0&\text{otherwise}\end{cases}$, therefore, it is also an indicator r.v.
+$E(I_1I_2) = P(I_1I_2-1) = P(1\text{st} = R\text{ and } 2\text{nd} = R) \\= P(2 \text{nd} = R| 1\text{st} = R)P(1\text{st} = R)=0.4(0.5)=0.2$
+$Cov(I_1,I_2)=E(I_1I_2)-E(I_1)E(I_2)=0.2-0.5^2=-0.05$
+$Var(X)=Var(I_1+I_2)=Var(I_1)+Var(I_2)+Cov(I_1,I_2)\\=P(I_1=1)P(I_1=0)+P(I_2=1)P(I_2=0)=2(0.5)^2+2(-0.05)=0.4$
+
+## Chapter 2: Waiting time r.v.
+- Background: Suppose we have a sequence of trials and we would like to observe an event $E$ based on the sequence of trials.
+Let $T_E$ = # of trials or waiting time to observe first E [including the trial to observe E]
