@@ -182,8 +182,8 @@ $$X: S \rightarrow \mathbb{R}$$
             - Negtive Binomial $\text{NegBin}(r,p)$
                 1. Range: $\{r,r+1,r+2,\dots\}$
                 2. pmf: $P(X=k) = \binom{k-1}{r-1}p^r(1-p)^{k-r}$ for $k=r,r+1,r+2,\dots$（not required)
-                3. Property: Let $X_1 = \text{Waiting time to observe 1st "s"},\\ X_2 = \text{Waiting time to observe 2nd "s" after 1st "s"},\\ ...,\\ X_r=\text{Waiting time to observe } r\text{th "s" after }  (r-1)\text{th "s"}$
-                $X = \displaystyle \sum_{i=1}^{r} X_i \sim \text{NegBin}(r,p)$: $X_1,...X_r$ are iid $\text{Geo}(p)$ rvs.
+                3. Property: Let $X_1 = \text{Waiting time to observe 1st "s"},\\ X_2 = \text{Waiting time to observe 2nd "s" after 1st "s"},\\ \cdots,\\ X_r=\text{Waiting time to observe } r\text{th "s" after }  (r-1)\text{th "s"}$
+                $X = \displaystyle \sum_{i=1}^{r} X_i \sim \text{NegBin}(r,p)$: $X_1,\cdots,X_r$ are iid $\text{Geo}(p)$ rvs.
 
                 >Example 1.5 (Negative Binomial rv example)
                 A fair coin is tossed repeatedly and independently. The objective is to observe the two heads in total. Let $X$ be the corresponding waiting time.
@@ -242,8 +242,8 @@ $$X: S \rightarrow \mathbb{R}$$
     >>Solution: $Var(X)=E(X^2)-[E(X)]^2=p-p^2=p(1-p)=P(X=1)+P(X=0)$
 - Properties: 
     1. $E(\sum_{i=1}^{n} a_i X_i) = \sum_{i=1}^{n} a_i E(X_i)$ [linearity]
-        $a_1,...,a_n$ are constants, $X_1,...,X_n$ are r.v.s
-    2. If $X_1,...,X_n$ are independent, then $Var(\sum_{i=1}^{n} a_iX_i) = \sum_{i=1}^{n} Var(a_iX_i)=\sum_{i=1}^{n} a_i^2Var(X_i)$
+        $a_1,\cdots,a_n$ are constants, $X_1,\cdots,X_n$ are r.v.s
+    2. If $X_1,\cdots,X_n$ are independent, then $Var(\sum_{i=1}^{n} a_iX_i) = \sum_{i=1}^{n} Var(a_iX_i)=\sum_{i=1}^{n} a_i^2Var(X_i)$
         [Aside: $Var(aX+b)=Var(aX)=a^2Var(X)$]
         >e.g. If $X_1$ and $X_2$ are independent, then
         >$Var(X_1+X_2)=Var(X_1)+Var(X_2)$, and 
@@ -264,9 +264,9 @@ $$X: S \rightarrow \mathbb{R}$$
     By Bernoulli distribution, $E(I_A) = P(I_A=1) = p$ and $Var(I_A)=P(I_A=1)P(I_A=0)=p(1-p)$
     >e.g. Suppose $X \sim \text{Bin}(n,p)$, find $E(X)$ and $Var(X)$
     >>Solution: (1) Def, (2)Mgf
-    >> $X=\sum_{i=1}^nI_i: I_1,...,I_n \text{ are iid Bernoulli}(p) \text{ r.v.}$
+    >> $X=\sum_{i=1}^nI_i: I_1,\cdots,I_n \text{ are iid Bernoulli}(p) \text{ r.v.}$
     >> Therefore $E(X) = \sum_{i=1}^nE(I_i)=np$ [linearlity], and
-    >> $Var(X)=Var\left(\sum_{i=1}^nI_i\right)=\sum_{i=1}^nVar(I_i)=np(1-p)$ [$I_1,...,I_n$ are independent]
+    >> $Var(X)=Var\left(\sum_{i=1}^nI_i\right)=\sum_{i=1}^nVar(I_i)=np(1-p)$ [$I_1,\cdots,I_n$ are independent]
 
 > Example 1.7
 >- Suppose we have two boxes: red box and black box.
@@ -291,3 +291,85 @@ $Var(X)=Var(I_1+I_2)=Var(I_1)+Var(I_2)+Cov(I_1,I_2)\\=P(I_1=1)P(I_1=0)+P(I_2=1)P
 ## Chapter 2: Waiting time r.v.
 - Background: Suppose we have a sequence of trials and we would like to observe an event $E$ based on the sequence of trials.
 Let $T_E$ = # of trials or waiting time to observe first E [including the trial to observe E]
+    Range: $\{1,2,3,\dots\}\cup\{\infty\}$ where $\infty$ means $E$ never occurs.
+- Classification of $T_E$
+    1. If $P(T_E<\infty)<1$ or $P(T_E<\infty)=0$, then $T_E$ is improper.
+        Note: In this case, $E(T_E)=\infty$ since $P(T_E<\infty)>0$.
+    2. If $P(T_E<\infty)=1$ or $P(T_E<\infty)=0$, then $T_E$ is proper.
+        1. If $P(T_E<\infty)=1$ and $E(T_E)=\infty$, then $T_E$ is null proper.
+        2. If $P(T_E<\infty)=1$ and $E(T_E)<\infty$, then $T_E$ is short proper.
+    - Comments
+        1. If $T_E$ is improper, then $E(T_E)=\infty$.
+        2. If $E(T_E)<\infty$, then $T_E$ is short proper.
+    - Aside: $\sum_{n=1}^{\infty}a_n$ do not include $\infty$ in the summation.
+        Recall $\sum_{n=1}^{\infty}a_n = \lim_{n\rightarrow \infty} \sum_{i=1}^{n} a_i$.
+        Hence $P(T_E<\infty)=\sum_{n=1}^{\infty}P(T_H=n)$
+>Example 2.1 (Short proper waiting time rv) 
+Suppose we toss a coin repeatedly and independently. At each toss, the probability of getting "$H$" is $p$ with $0<p<1$. Let $T_H$ be the waiting time for the first "$H$".
+> Claim: $T_H$ is a short proper waiting time random variable.
+>>Solution:
+>> $T_H \sim \text{Geo}(p)$
+>> Then $P(T_H=n)=(1-p)^{n-1}p$, $n\geq 1$
+>> $P(T_H<\infty)=\sum_{n=1}^\infty(1-p)^{n-1}p-\frac{p}{1-(1-p)}=1$
+>> When $T_H\sim \text{Geo}(p)$, E(T_H)=\frac{1}{p}<\infty$
+Therefore, $T_H$ is a short proper waiting time random variable.
+
+>Example 2.2 (Null proper waiting time rv)
+Suppose we toss a coin repeatedly and independently. For $n=1,2,3,\cdots$ the probability of getting "$H$" is $\frac{1}{n+1}$ at the
+$n$th toss.
+Let $T_H$ be the waiting time for the first "$H$".
+Claim: $T_H$ is a null proper waiting time random variable.
+>>Solution:
+$P(T_H=n)=P(1\text{st time to observe }H\text{ is }n)=P(1\text{st}=T,2\text{nd}=T,\cdots,(n-1)\text{th}=T,n\text{th}=H)\\=P(1\text{st}=T)P(2\text{nd}=T)\cdots P((n-1)\text{th}=T)P(n\text{th}=H)\\=\frac{1}{2}\cdot\frac{2}{3}\cdot\frac{3}{4}\cdots\frac{n-1}{n}\cdot\frac{1}{n+1}=\frac{1}{n(n+1)}$
+$P(T_H<\infty) = \sum_{n=1}^\infty \frac{1}{n(n+1)}=\sum_{n=1}^\infty\left(\frac{1}{n}-\frac{1}{n+1}\right)=(1-\frac{1}{2})+(\frac{1}{2}-\frac{1}{3})+\cdots=1$
+$E(T_H)=\sum_{n=1}^{\infty}nP(T_H=n)=\sum_{n=1}^{\infty}n\frac{1}{n(n+1)}=\infty$
+
+>Example 2.3 (Improper waiting time rv)
+Suppose we toss a coin repeatedly and independently. For $n=1,2,3,\cdots$, the probability of getting "$H$" is $2^{-n}$ at the $n$th toss. Let $T_H$ be the waiting time for the first "$H$".
+Claim: $T_H$ is an improper waiting time random variable.
+>> Solution:
+$P(T_H=1)=P(1\text{st} = H) = \frac{1}{2}$
+$P(T_H=2)=P(1\text{st} = T, 2\text{nd} = H)=P(1\text{st} = T)P(2\text{nd} = H)\frac{1}{2^3}=\frac{1}{8}$
+In general,
+$P(T_H=n)=P(1\text{st} = T, 2\text{nd} = T,\cdots,(n-1)\text{th} = T, n\text{th} = H)\\=P(1\text{st} = T)P(2\text{nd} = T)\cdots P((n-1)\text{th} = T)P(n\text{th} = H)\leq \frac{1}{2^{n+1}}$ for $n>2$
+$P(T_H<\infty) =\sum_{n=1}^\infty P(T_H=n) = P(T_H=1)+\sum_{n=2}{\infty}P(T_H=n)\leq 2^{-(n+1)}\leq \frac{1}{2} + \sum_{n=2}^{\infty}\frac{1}{2^{n+1}}=\frac{1}{2}+\frac{1/8}{1-\frac{1}{2}}=\frac{1}{2}+\frac{1}{4}=\frac{3}{4}<1$
+
+## Chapter 3: Conditional Expectation
+### 3.1 Joint rvs:
+We consider 2 r.v.s
+- Joint discrete r.v.s
+    If X and Y are discrete r.v.s, then (X,Y) are joint discrete.
+- Joint pmf:
+    $f_{X,Y}(x,y)=P(X=x,Y=y)$
+- Properties:
+    1. Joint pmf is a pmf: $f_{X,Y}(x,y)\geq 0$ and $\sum_{x}\sum_{y}f_{X,Y}(x,y)=1$
+    2. Marginal pmf of $X$: $f_X(x)=P(X=x)=\sum_{y}f_{X,Y}(x,y)$
+        Marginal pmf of $Y$: $f_Y(y)=P(Y=y)=\sum_{x}f_{X,Y}(x,y)$
+    3. Expectation: $h(x,y)$ is a bivariate function
+        $E(h(X,Y))=\sum_{x}\sum_{y}h(x,y)f_{X,Y}(x,y)$
+        > E.g. $E(XY)=\sum_{x}\sum_{y}xyf_{X,Y}(x,y)$
+
+        > E.g. $E(X)=\sum_{x}\sum_{y}xf_{X,Y}(x,y)=\sum_{x}xf_X(x)$
+- Joint continuous r.v.s
+    If X and Y are continuous r.v.s and $P(X\leq x, Y\leq y)=\int_{-\infty}^{x}\int_{-\infty}^{y}f_{X,Y}(s,t)dtds$, then (X,Y) are joint continuous and $f_{X,Y}(x,y)$ is called joint pdf.
+- Properties:
+    1. $f_{X,Y}(x,y)\geq 0$ and $\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}f_{X,Y}(x,y)dxdy=1$
+    2. Mariginal pdf of X: $f_X(x)=\int_{-\infty}^{\infty}f_{X,Y}(x,y)dy$
+        Mariginal pdf of Y: $f_Y(y)=\int_{-\infty}^{\infty}f_{X,Y}(x,y)dx$
+    3. Expectation: $h(x,y)$ is a bivariate function
+        $E(h(X,Y))=\int_{-\infty}^{\infty}\left[\int_{-\infty}^{\infty}h(x,y)f_{X,Y}(x,y)dy\right]dx$
+        > E.g. $E(XY)=\int_{-\infty}^{\infty}\left[\int_{-\infty}^{\infty}xyf_{X,Y}(x,y)dy\right]dx$
+
+        > E.g. $E(X)=\int_{-\infty}^{\infty}\left[\int_{-\infty}^{\infty}xf_{X,Y}(x,y)dy\right]dx=\int_{-\infty}^{\infty}xf_X(x)dx$
+- Independence: Both continuous and discrete
+    If $f_{X,Y}(x,y)=f_X(x)f_Y(y)$, then X and Y are independent.
+    i.e. Joint probability = product of marginal probabilities
+- Properties of Independence:
+    Ifd $X$ and $Y$ are independent, then $h(X)$ and $g(Y)$ are independent.
+    $E(h(X)g(Y))=E(h(X))E(g(Y))$
+    $E(XY)=E(X)E(Y)$ and $Cov(X,Y)=0$
+    Note: If $Cov(X,Y)=0$, $X$ and $Y$ are not necessarily independent.
+    >E.g. $X\sim \text{Unif}[-1,1]$, $f_X(x)=\begin{cases}\frac{1}{2}&-1< x< 1\\0&\text{o.w.}\end{cases}$ and $Y=X^2$
+    then $E(X)=\int_{-1}^{1}xf_X(x)dx=\int_{-1}^{1}\frac{1}{2}xdx=0$
+    $E(XY))=\int_{-1}^{1}xyf_X(x)dx=\int_{-1}^{1}\frac{1}{2}x^3dx=0$
+    then $E(XY)=E(X)E(Y)$, $Cov(X,Y)=0$, but $X$ and $Y=X^2$ are not independent.
