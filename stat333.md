@@ -239,7 +239,7 @@ $$X: S \rightarrow \mathbb{R}$$
 - Variance
     $Var(X) = E(X^2) - [E(X)]^2$
     > e.g. $X \sim \text{Bernoulli}(p)$, Find $Var(X)$.
-    >>Solution: $Var(X)=E(X^2)-[E(X)]^2=p-p^2=p(1-p)=P(X=1)+P(X=0)$
+    >>Solution: $Var(X)=E(X^2)-[E(X)]^2=p-p^2=p(1-p)=P(X=1)*P(X=0)$
 - Properties: 
     1. $E(\sum_{i=1}^{n} a_i X_i) = \sum_{i=1}^{n} a_i E(X_i)$ [linearity]
         $a_1,\cdots,a_n$ are constants, $X_1,\cdots,X_n$ are r.v.s
