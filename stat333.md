@@ -373,3 +373,89 @@ We consider 2 r.v.s
     then $E(X)=\int_{-1}^{1}xf_X(x)dx=\int_{-1}^{1}\frac{1}{2}xdx=0$
     $E(XY))=\int_{-1}^{1}xyf_X(x)dx=\int_{-1}^{1}\frac{1}{2}x^3dx=0$
     then $E(XY)=E(X)E(Y)$, $Cov(X,Y)=0$, but $X$ and $Y=X^2$ are not independent.
+
+### 3.2 Conditional distribution and conditional expectation
+- Discrete case: $X$ and $Y$
+    Joint pmf: $f_{X,Y}(x,y)$
+    Marginal pmf: $f_X(x), f_Y(y)$
+    - Conditional pmf:
+    For a given $y$ such that $f_Y(y)>0$, the conditional pmf of $X$ given $Y=y$ is defined as $$f_{X|Y}(x|y)=\frac{f_{X,Y}(x,y)}{f_Y(y)}=\frac{\text{Joint}}{\text{Marginal}}$$
+    - Property of conditional pmf:
+        Conditional pmf is a pmf, i.e., 
+        1. $f_{X|Y}(x|y)\geq 0$
+            > Proof: Directly follows definition.
+        2. $\sum_{x}f_{X|Y}(x|y)=1$
+            > Proof: $\sum_{x}f_{X|Y}(x|y)=\sum_{x}\frac{f_{X,Y}(x,y)}{f_Y(y)}=\frac{1}{f_Y(y)}\sum_{x}f_{X,Y}(x,y)=\frac{1}{f_Y(y)}f_Y(y)=1$
+    - Conditional expectation:
+        Conditional expectation of $X$ given $Y=y$ is defined as $$E(X|Y=y)=\sum_{x}xf_{X|Y}(x|y)$$
+        Conditional expectation of $g(X)$ given $Y=y$ is defined as $$E(g(X)|Y=y)=\sum_{x}g(x)f_{X|Y}(x|y)$$
+    - Independence property:
+        If $X$ and $Y$ are independent, then $E(X|Y=y)=E(X)$ and $E(g(X)|Y=y)=E(g(X))$
+        > Key: If $X$ and $Y$ are independent, then $f_{X|Y}(x|y)=f_X(x)$.
+
+        > Proof: $f_{X|Y}(x|y)=\frac{f_{X,Y}(x,y)}{f_Y(y)}=\frac{f_X(x)f_Y(y)}{f_Y(y)}=f_X(x)$
+        > $\implies E(X|Y=y)=\sum_{x}xf_{X|Y}(x|y)=\sum_{x}xf_X(x)=E(X)$
+
+        Intuitively: Independence makes "Conditional" become "Unconditional". 
+    > Example 3.1
+    > Suppose $X_1 \sim \text{Pois}(\lambda_1)$ and $X_2 \sim \text{Pois}(\lambda_2)$, and $X_1$ and $X_2$ are independent.
+    Let $X=X_1$, $Y=X_1+X_2$.
+    Find:
+    > 1. $f_{X|Y}(x|y)$
+    >> Solution: $Y \sim \text{Pois}(\lambda_1+\lambda_2)$, therefore $f_Y(y)=\frac{(\lambda_1+\lambda_2)^ye^{-(\lambda_1+\lambda_2)}}{y!}$
+    >> We need $P(X=x, Y=y)$.
+    >> $P(X=x, Y=y)=P(X=x, X_1+X_2=y)=P(X_1=x, X_2=y-x)=P(X_1=x)P(X_2=y-x)=\frac{\lambda_1^xe^{-\lambda_1}}{x!}\cdot\frac{\lambda_2^{y-x}e^{-\lambda_2}}{(y-x)!}$
+    >> Therefore, $f_{X|Y}(x|y) = \frac{P(X=x, Y=y)}{P(Y=y)} = \frac{\frac{\lambda_1^xe^{-\lambda_1}}{x!}\cdot\frac{\lambda_2^{y-x}e^{-\lambda_2}}{(y-x)!}}{\frac{(\lambda_1+\lambda_2)^ye^{-(\lambda_1+\lambda_2)}}{y!}} = \binom{y}{x} \left(\frac{\lambda_1}{\lambda_1+\lambda_2}\right)^x \left(\frac{\lambda_2}{\lambda_1+\lambda_2}\right)^{y-x}$ where $x=0,1,2,\cdots,y$.
+    $X|Y=y \sim \text{Bin}(y, \frac{\lambda_1}{\lambda_1+\lambda_2})$
+    > 2. $E(X|Y=y)$ for some positive integer $y$.
+    >> Solution: $E(X|Y=y)=y\frac{\lambda_1}{\lambda_1+\lambda_2}$
+
+- Continuous case: $X$ and $Y$
+    Joint pdf: $f_{X,Y}(x,y)$
+    Marginal pdf: $f_X(x), f_Y(y)$
+    - Conditional pdf:
+    For a given $y$ such that $f_Y(y)>0$, the conditional pdf of $X$ given $Y=y$ is defined as $$f_{X|Y}(x|y)=\frac{f_{X,Y}(x,y)}{f_Y(y)}=\frac{\text{Joint}}{\text{Marginal}}$$
+    - Property of conditional pdf:
+        Conditional pdf is a pdf, i.e., 
+        1. $f_{X|Y}(x|y)\geq 0$
+        2. $\int_{-\infty}^{\infty}f_{X|Y}(x|y)dx=1$
+    - Conditional expectation:
+        Conditional expectation of $X$ given $Y=y$ is defined as $$E(X|Y=y)=\int_{-\infty}^{\infty}xf_{X|Y}(x|y)dx$$
+        Conditional expectation of $g(X)$ given $Y=y$ is defined as $$E(g(X)|Y=y)=\int_{-\infty}^{\infty}g(x)f_{X|Y}(x|y)dx$$
+    - Independence property:
+        If $X$ and $Y$ are independent, then $E(X|Y=y)=E(X)$ and $E(g(X)|Y=y)=E(g(X))$
+        > Key: If $X$ and $Y$ are independent, then $f_{X|Y}(x|y)=f_X(x)$.
+
+    > Example 3.2
+    Suppose $X$ and $Y$ has the joint pdf
+    $$f_{X,Y}(x,y) = \begin{cases} xe^{-xy} & x>0, y>1\\0&\text{o.w.}\end{cases}$$
+    Find:
+    > 1. $f_{X|Y}(x|y)$
+    >> Solution: 
+    >> $\Gamma(\alpha) = \int_{0}^{\infty}x^{\alpha-1}e^{-x}dx$ and
+    >> $\Gamma(n) = (n-1)!$
+    >> Let $t = xy$, then $x = \frac{t}{y}$ and $dx = \frac{dt}{y}$
+    >> Then, $f_Y(y) = \int_{0}^{\infty}xe^{-xy}dx = \int_{0}^{\infty}\frac{t}{y}e^{-t}\frac{dt}{y} = \frac{1}{y^2}\Gamma(2) = \frac{1}{y^2}$, $y>1$
+    >> $f_{X,Y}(x,y) = \frac{xe^{-xy}}{f_Y(y)} = \frac{xe^{-xy}}{\frac{1}{y^2}} = y^2xe^{-xy}$
+    > 2. $E(X|Y=y)$ for $y > 1$.
+    >> Solution: $E(X|Y=y) = \int_{0}^{\infty}xf_{X|Y}(x|y)dx = \int_{0}^{\infty}xy^2xe^{-xy}dx = \int_{0}^{\infty}(xy)^2e^{-xy}dx  = \int_{0}^{\infty}te^{-t}\frac{dt}{y} = \frac{1}{y}\Gamma(3) = \frac{2}{y}$
+- Summary of properties of conditional expectation
+    (Apply to both discrete and continuous cases)
+    1. Conditional expectation has properties of expectation.
+        > e.g. $E\left[\sum_{i=1}^{n}a_iX_i|Y=y\right] = \sum_{i=1}^{n}a_iE(X_i|Y=y)$
+    2. Substitution Rule:
+        $E[Xg(Y)|Y=y]= E[Xg(y)|Y=y] = g(y)E[X|Y=y]$.
+        Here, $g(Y)$ is a r.v., but $g(y)$ is a constant.
+        > e.g. $E[XY|Y=y]=yE[X|Y=y]$
+        In general, $E[h(X,Y)|Y=y]=E[h(X,y)|Y=y]$
+    3. Independence Property
+        If $X$ and $Y$ are independent, then $E(X|Y=y)=E(X)$ and $E(g(X)|Y=y)=E(g(X))$
+
+### 3.3 Calculating expectation by conditioning
+This section: We cover $E(X)=E(E(X|Y))$, double expectation theorem and law of total expectation.
+- What is $E(X|Y)$?
+    It is a r.v., depends on $Y$ or a function of $Y$, i.e. $E(X|Y)=g(Y)$.
+- What is the funtion g(y)?
+    Function $g(y)$ is $g(y) = E(X|Y=y)$ covered in [3.2](#32-conditional-distribution-and-conditional-expectation).
+    E.g. in Example 3.1, $E(X|Y=y)=y\frac{\lambda_1}{\lambda_1+\lambda_2}: g(y)=y\frac{\lambda_1}{\lambda_1+\lambda_2}$
+    E.g. in Example 3.2, $E(X|Y=y)=\frac{2}{y}: g(y)=\frac{2}{y}$
