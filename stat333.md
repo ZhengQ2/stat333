@@ -284,7 +284,7 @@ $P(X_1=1)=P(1\text{st ball}=R)=P(1\text{st ball}=R|H)P(H)+P(1\text{st ball}=R|T)
 $P(X_2=1)=P(2\text{nd ball}=R)=P(2\text{nd ball}=R|H)P(H)+P(2\text{nd ball}=R|T)P(T)=0.4\cdot \frac{1}{2}+0.6\cdot \frac{1}{2}\cdot \frac{1}{2}=0.5$
 Therefore, $E(X) = E(I_1)+E(I_2)=P(I_1=1)+P(I_2=2)=0.5+0.5=1$
 Here, $I_1I_2=\begin{cases} 1&I_1=I-2=1\text{ or 1st = } R \text{ and 2nd = }R\\0&\text{otherwise}\end{cases}$, therefore, it is also an indicator r.v.
-$E(I_1I_2) = P(I_1I_2-1) = P(1\text{st} = R\text{ and } 2\text{nd} = R) \\= P(2 \text{nd} = R| 1\text{st} = R)P(1\text{st} = R)=0.4(0.5)=0.2$
+$E(I_1I_2) = P(I_1I_2=1) = P(1\text{st} = R\text{ and } 2\text{nd} = R) \\= P(2 \text{nd} = R| 1\text{st} = R)P(1\text{st} = R)=0.4(0.5)=0.2$
 $Cov(I_1,I_2)=E(I_1I_2)-E(I_1)E(I_2)=0.2-0.5^2=-0.05$
 $Var(X)=Var(I_1+I_2)=Var(I_1)+Var(I_2)+Cov(I_1,I_2)\\=P(I_1=1)P(I_1=0)+P(I_2=1)P(I_2=0)=2(0.5)^2+2(-0.05)=0.4$
 
@@ -452,10 +452,81 @@ We consider 2 r.v.s
         If $X$ and $Y$ are independent, then $E(X|Y=y)=E(X)$ and $E(g(X)|Y=y)=E(g(X))$
 
 ### 3.3 Calculating expectation by conditioning
-This section: We cover $E(X)=E(E(X|Y))$, double expectation theorem and law of total expectation.
+This section: We cover $E(X)=E[E(X|Y)]$, double expectation theorem and law of total expectation.
 - What is $E(X|Y)$?
     It is a r.v., depends on $Y$ or a function of $Y$, i.e. $E(X|Y)=g(Y)$.
 - What is the funtion g(y)?
     Function $g(y)$ is $g(y) = E(X|Y=y)$ covered in [3.2](#32-conditional-distribution-and-conditional-expectation).
     E.g. in Example 3.1, $E(X|Y=y)=y\frac{\lambda_1}{\lambda_1+\lambda_2}: g(y)=y\frac{\lambda_1}{\lambda_1+\lambda_2}$
     E.g. in Example 3.2, $E(X|Y=y)=\frac{2}{y}: g(y)=\frac{2}{y}$
+- How to obtain $E(E|Y)$
+    - Step 1: Figure out $g(y)= E(X|Y=y)$
+        Either by definition or by properties.
+    - Step 2: $E(X|Y)=g(Y)$
+
+    > E.g. In example 3.1, $E(X|Y)=Y\frac{\lambda_1}{\lambda_1+\lambda_2} \implies E(X|Y)=g(Y)=Y\frac{\lambda_1}{\lambda_1+\lambda_2}$
+
+    > E.g. In example 3.2, $E(X|Y)=\frac{2}{Y} \implies E(X|Y)=g(Y)=\frac{2}{Y}$
+
+    Note: $E(X)=E(g(Y))\neq E[E(X|Y=y)] = E(g(y))$
+- How to apply $E(X) = E[E(X|Y)]$?
+    $E(X)= E(g(Y)) = \begin{cases} \sum_y g(y)f_Y(y)&\text{discrete }Y\\ \int_{-\infty}^{\infty}g(y)f_Y(y)dy&\text{continuous }Y\end{cases}$
+    $\implies E(X) = E(g(Y)) = E[E(X|Y)] = \begin{cases} \sum_y E(X|Y=y)f_Y(y)&\text{discrete }Y\\ \int_{-\infty}^{\infty}E(X|Y=y)f_Y(y)dy&\text{continuous }Y\end{cases}$
+    Key: $E(X|Y=y)=g(y)$
+- Why $E(X) = E(g(Y)) = \begin{cases} \sum_y g(y)f_Y(y)&\text{discrete }Y\\ \int_{-\infty}^{\infty}g(y)f_Y(y)dy&\text{continuous }Y\end{cases}$
+    We concerntrate on discrete case.
+    LHS: $E(X)=\sum_x\sum_y xf_{X,Y}(x,y)$
+    RHS: $\sum_y E(X|Y=y)f_Y(y) = \sum_y \sum_x xf_{X|Y}(x|y)f_Y(y) = \sum_y \sum_x xf_{X,Y}(x|y) = \sum_x \sum_y xf_{X,Y}(x,y)$
+> Example 3.3
+Let $Y_1,Y_2,...$ be independently distributed random variables such that for
+$n \geq 1$,
+$$Y_n \sim \text{Pois}(n)$$
+That is, $Y_1 \sim \text{Pois}(1)$, $Y_2 \sim \text{Pois}(2)$, $Y_3 \sim \text{Pois}(3)$, and so on.
+Assume that $N \sim \text{Geo}(0.5)$ and it is independent of $Y_1,Y_2,...$.
+Let $X \sim Y_N$ . Find $E(X)$.
+>> Solution: $E(X) = E(E(X|N)) = \sum_{n=1}^\infty E(X|N=n)P(N=n)$
+$P(N=n) = (1-p)^{n-1}p = \frac{1}{2^n}$, $n=1,2,...$.
+$E(X|N=n) = E(Y_N|N=n) = E(Y_n|N=n) = E(Y_n) = n$, since $Y_n \sim \text{Pois}(n)$.
+>>> Method 1: $E(X) = \sum_{n=1}^\infty n(\frac{1}{2}^n=E(N)=\frac{1}{0.5}=2$
+>>
+>>> Method 2: $g(n)=n \implies g(N)=N \implies E(X)=E(N)=2$
+
+>Example 3.4
+Suppose we toss a coin repeatedly and independently. At each toss, the probability of getting "$H$" is with $0 < p < 1$. Let $X$ be the waiting time for the first "$H$".
+Show that $E(X) = 1/p$.
+>> Solution: $X \sim \text{Geo}(p)$.
+Let $Y = \begin{cases} 1 & \text{if 1st outcome } = H\\ 0 & \text{if 1st outcome } = T\end{cases}$.
+Let $R$ be Remainning time to observe 1st $H$. Then, E(X) = E(R).
+$E(X) = \sum_y E(X|Y=y)P(Y=y) = E(X|Y=1)p + E(X|Y=0)(1-p)$
+$\implies E(X) = 1p + (E(R)+1)(1-p) = p+(1-p)+(1-p)E(R) = 1+(1-p)E(X)$
+$\implies E(X) = \frac{1}{p}$.
+
+>Example 3.5
+- A miner is trapped. There are 3 doors.
+    - Door 1 leads to safety after 2 hrs.
+    - Door 2 returns the miner to the starting point in 3 hrs.
+    - Door 3 leads the miner to starting points after 4 hrs.
+- Assuming the miner randomly chooses a door at each time.
+- Let $X$ be the length of time until the miner gets out.
+Find $E(X)$.
+>> Solution: Let $Y$ be the door # miner chosen at the first time.
+Then, $P(Y=1) = P(Y=2) = P(Y=3) = \frac{1}{3}$.
+Here, $X|Y=1 = 2$, $X|Y=2 = 3+R$, $X|Y=3 = 4+R$, where $R$ is the remainning time that miner needs to spend before safety after he returns to starting point
+Note: $X$ and $R$ have the same distribution, i.e. $E(X) = E(R)$.
+Then, $E(X) = \sum_y E(X|Y=y)P(Y=y) = E(X|Y=1)P(Y=1) + E(X|Y=2)P(Y=2) + E(X|Y=3)P(Y=3) = 2\frac{1}{3} + (3+E(R))\frac{1}{3} + (4+E(R))\frac{1}{3} = \frac{1}{3}(2+3+4) + \frac{2}{3}E(R) = \frac{1}{3}(2+3+4) + \frac{2}{3}E(X)$
+$\implies E(X) = 2+3+4$.
+
+### 3.4 Computing probabilities by conditioning
+- Suppose $A$ is an event and we need P(A)
+- Let $I_A = \begin{cases} 1 & \text{if } A \text{ occurs}\\ 0 & \text{if } A \text{ does not occur}\end{cases}$
+    $\implies P(A) = E(I_A) = \begin{cases} \sum_y E(I_A|Y=y)f_Y(y) & \text{discrete }Y\\ \int_{-\infty}^{\infty}E(I_A|Y=y)f_Y(y)dy & \text{continuous }Y\end{cases}$
+    Note: $E(I_A|Y=y) = P(I_A=1|Y=y) = P(A|Y=y)$
+    $\implies P(A) = \begin{cases} \sum_y P(A|Y=y)f_Y(y) & \text{discrete }Y\\ \int_{-\infty}^{\infty}P(A|Y=y)f_Y(y)dy & \text{continuous }Y\end{cases}$
+>Example 3.6 If $X_1, X_2, X_3$ are iid random variables from uniform distribution on $[0,1]$.
+(a) Find $P(X_1 < X_2) = P(X_1 = \min (X_1,X_2))$;
+>> Solution: $Y=X_2$,
+$P(X_1< X_2) = \int_{-\infty}^\infty P(X_1< X_2| Y=X_2=y) f_{X_2}(y)dy = \int_1^0 P(X_1< X_2| Y=X_2=y)1dy = \int_0^1 P(X_1<y| Y=X_2=y) dy = \int_0^1 P(X_1< y) dy$
+$P(X_1<y) = \int_0^yf_{X_1}(x)dx = \int_0^y 1dx = y$
+$P(X_1< X_2) = \int_0^1 ydy = \frac{1}{2}$
+>
+>(b) Find P(X_1 < X_2 < X_3).
