@@ -531,7 +531,7 @@ $P(X_1< X_2) = \int_0^1 ydy = \frac{1}{2}$
 >
 >(b) Find P(X_1 < X_2 < X_3).
 >> Solution: We consider conditioning on on $X_2$.
-$$\begin{align*} P(X_1<X_2<X_3)&= \int_{-\infty}^\infty P(X_1<X_2<X_3|x_2=y)f_{X_2}(y)dy\\&=\int_0^1P(X_1<X_2<X_3|x_2=y)dy \text{ (as } f_{X_2}(y) = 1\\&=\int_0^1P(X_1<y<X_3|x_2=y)dy\text{ (by substitution rule)}\\&=\int_0^1P(X_1<y<X_3)dy\text{ (since } X_1, X_3 \text{ and } X_2 \text{ are independent)}\\&=\int_0^1P(X_1<y, y<X_3)dy\\&=\int_0^1P(X_1<y)P(y<X_3)dy \text{ (since } X_1 \text{ and } X_3 \text{ are independent)}\end{align*}$$
+$$\begin{align*} P(X_1<X_2<X_3)&= \int_{-\infty}^\infty P(X_1<X_2<X_3|X_2=y)f_{X_2}(y)dy\\&=\int_0^1P(X_1<X_2<X_3|X_2=y)dy \text{ (as } f_{X_2}(y) = 1\text{)}\\&=\int_0^1P(X_1<y<X_3|X_2=y)dy\text{ (by substitution rule)}\\&=\int_0^1P(X_1<y<X_3)dy\text{ (since } X_1, X_3 \text{ and } X_2 \text{ are independent)}\\&=\int_0^1P(X_1<y, y<X_3)dy\\&=\int_0^1P(X_1<y)P(y<X_3)dy \text{ (since } X_1 \text{ and } X_3 \text{ are independent)}\end{align*}$$
 Here, $P(X_1<y) = \int_0^yf_{X_1}(x)dx = \int_0^y 1dx = y$ and $P(y<X_3) = \int_y^1f_{X_3}(x)dx = \int_y^1 1dx = 1-y$
 Hence, $P(X_1<X_2<X_3) = \int_0^1 y(1-y)dy = \frac{1}{6}$
 
@@ -647,7 +647,7 @@ Hence, $P(X_1<X_2<X_3) = \int_0^1 y(1-y)dy = \frac{1}{6}$
     $P(N=0)=P(N=3)=\frac{1}{8}$, $P(N=1)=P(N=2)=\frac{3}{8}$.
     We further assume that $Y$ and $N$ are independent. Define $X=Y^N$.
     Find $E(X)$, $Var(X)$, and $P(X<0)$.
-    Note: $E(Y) = E(Y^3) = E(Y^5) = 0, E(Y^2) =1, E(Y^4) = 3, E(Y^6) = 15, and P(Y<0) = 0.5$.
+    Note: $E(Y) = E(Y^3) = E(Y^5) = 0, E(Y^2) =1, E(Y^4) = 3, E(Y^6) = 15$, and $P(Y<0) = 0.5$.
     >> Solution:
     $E(X) = E[E(X|N)] = E(Y^N) = E(Y^N|N=0)P(N=0) + E(Y^N|N=1)P(N=1) + E(Y^N|N=2)P(N=2) + E(Y^N|N=3)P(N=3) = E(Y^0)P(N=0) + E(Y^1)P(N=1) + E(Y^2)P(N=2) + E(Y^3)P(N=3) = 1\cdot\frac{1}{8} + 0\cdot\frac{3}{8} + 1\cdot\frac{3}{8} + 0\cdot\frac{1}{8} = \frac{1}{2}$
     Similarly, $E(X^2) = E[E(X^2|N)] = E(Y^{2N}) = E(Y^{2N}|N=0)P(N=0) + E(Y^{2N}|N=1)P(N=1) + E(Y^{2N}|N=2)P(N=2) + E(Y^{2N}|N=3)P(N=3) = E(Y^0)P(N=0) + E(Y^2)P(N=1) + E(Y^4)P(N=2) + E(Y^6)P(N=3) = 28/8 = \frac{7}{2}$.
