@@ -502,13 +502,13 @@ $\implies E(X) = 1p + (E(R)+1)(1-p) = p+(1-p)+(1-p)E(R) = 1+(1-p)E(X)$
 $\implies E(X) = \frac{1}{p}$.
 
 >Example 3.5
-- A miner is trapped. There are 3 doors.
-    - Door 1 leads to safety after 2 hrs.
-    - Door 2 returns the miner to the starting point in 3 hrs.
-    - Door 3 leads the miner to starting points after 4 hrs.
-- Assuming the miner randomly chooses a door at each time.
-- Let $X$ be the length of time until the miner gets out.
-Find $E(X)$.
+>- A miner is trapped. There are 3 doors.
+>    - Door 1 leads to safety after 2 hrs.
+>    - Door 2 returns the miner to the starting point in 3 hrs.
+>    - Door 3 leads the miner to starting points after 4 hrs.
+>- Assuming the miner randomly chooses a door at each time.
+>- Let $X$ be the length of time until the miner gets out.
+>Find $E(X)$.
 >> Solution: Let $Y$ be the door # miner chosen at the first time.
 Then, $P(Y=1) = P(Y=2) = P(Y=3) = \frac{1}{3}$.
 Here, $X|Y=1 = 2$, $X|Y=2 = 3+R$, $X|Y=3 = 4+R$, where $R$ is the remainning time that miner needs to spend before safety after he returns to starting point
@@ -530,3 +530,148 @@ $P(X_1<y) = \int_0^yf_{X_1}(x)dx = \int_0^y 1dx = y$
 $P(X_1< X_2) = \int_0^1 ydy = \frac{1}{2}$
 >
 >(b) Find P(X_1 < X_2 < X_3).
+>> Solution: We consider conditioning on on $X_2$.
+$$\begin{align*} P(X_1<X_2<X_3)&= \int_{-\infty}^\infty P(X_1<X_2<X_3|x_2=y)f_{X_2}(y)dy\\&=\int_0^1P(X_1<X_2<X_3|x_2=y)dy \text{ (as } f_{X_2}(y) = 1\\&=\int_0^1P(X_1<y<X_3|x_2=y)dy\text{ (by substitution rule)}\\&=\int_0^1P(X_1<y<X_3)dy\text{ (since } X_1, X_3 \text{ and } X_2 \text{ are independent)}\\&=\int_0^1P(X_1<y, y<X_3)dy\\&=\int_0^1P(X_1<y)P(y<X_3)dy \text{ (since } X_1 \text{ and } X_3 \text{ are independent)}\end{align*}$$
+Here, $P(X_1<y) = \int_0^yf_{X_1}(x)dx = \int_0^y 1dx = y$ and $P(y<X_3) = \int_y^1f_{X_3}(x)dx = \int_y^1 1dx = 1-y$
+Hence, $P(X_1<X_2<X_3) = \int_0^1 y(1-y)dy = \frac{1}{6}$
+
+> Example 3.7
+> Suppose 
+> - $Y$ has pdf $f(y) = \begin{cases} ye^{-y} & y>0\\0&y\leq 0\end{cases}$.
+> - $X|Y=y \sim \text{Pois}(y)$
+> Find $P(X=n)$.
+>> Solution: $P(X=n) = \int_{-\infty}^\infty P(X=n|Y=y)f_Y(y)dy = \int_0^\infty P(X=n|Y=y)f_Y(y)dy$
+>> Here, $X|Y=y \sim \text{Poiss}(y)$ \implies $P(X=n|Y=y) = \frac{y^ne^{-y}}{n!}$
+>> Thus, $P(X=n) = \int_0^\infty \frac{y^ne^{-y}}{n!}ye^{-y}dy = \int_0^\infty \frac{y^{n+1}e^{-2y}}{n!}dy$
+>> Let $t = 2y$, then $y = \frac{t}{2}$ and $dy = \frac{dt}{2}$
+>> Then, $P(X=n) = \int_0^\infty \frac{(\frac{t}{2})^{n+1}e^{-t}}{n!}\frac{dt}{2} = \frac{1}{2^{n+2}n!}\int_0^\infty t^{n+1}e^{-t}dt$
+> Recall that $\Gamma(\alpha) = \int_0^\infty x^{\alpha-1}e^{-x}dx$ and $\Gamma(n) = (n-1)!$. Then $P(X=n) =\frac{1}{2^{n+2}n!}\Gamma(n+2) = \frac{1}{2^{n+2}n!}(n+1)! = \frac{n+1}{2^{n+2}}$ for $n\geq 0$.
+
+### 3.5 Calculating variance by Conditioning
+- Method 1: by definition
+    Recall: $Var(X) = E(X^2) - [E(X)]^2$
+    Note: Double expectation theorem or law of total expectation is applicable for any expectation.
+    Hence: $E[f(x)]=E[E(f(x)|Y)]$
+    Then: $\begin{cases} E(X^2) = E[E(X^2|Y)]\\ E(X) = E[E(X|Y)]\end{cases}$ and $Var(X) = E(X^2) - [E(X)]^2$
+
+    > Example 3.8: 
+    >- A miner is trapped. There are 3 doors.
+    >    - Door 1 leads to safety after 2 hrs.
+    >    - Door 2 returns the miner to the starting point in 3 hrs.
+    >    - Door 3 leads the miner to starting points after 4 hrs.
+    >- Assuming the miner randomly chooses a door at each time.
+    >- Let $X$ be the length of time until the miner gets out.
+    >Find $Var(X)$.
+    >> Solution: Recall example 3.5.
+    >> Let $Y$ be the door # miner chosen at the first time.
+    >> Then, $P(Y=1) = P(Y=2) = P(Y=3) = \frac{1}{3}$.
+    >> Here, $X|Y=1 = 2$, $X|Y=2 = 3+R$, $X|Y=3 = 4+R$, where $R$ and $X$ have the same distribution.
+    >> We found $E(X) = 2+3+4 = 9 = E(R)$ and $E(X^2) = E(R^2)$.
+    >> $$\begin{align*}E(X^2) &= \sum_y E(X^2|Y=y)P(Y=y)\\&=E(X^2|Y=1)P(Y=1) + E(X^2|Y=2)P(Y=2) + E(X^2|Y=3)P(Y=3)\\&=2^2\frac{1}{3} + E[(3+R)^2]\frac{1}{3} + E[(4+R)^2]\frac{1}{3}\\&=\frac{4}{3} + \frac{1}{3}E(9+6R+R^2) + \frac{1}{3}E(16+8R+R^2)\\&=\frac{1}{3}(4+9+16)+\frac{1}{3}\cdot 14 \cdot E(R)+\frac{2}{3}E(R^2)\\&=\frac{1}{3}(4+9+16)+\frac{1}{3}\cdot 14\cdot 9+\frac{2}{3}E(X^2)\end{align*}$$
+    Solve get $E(X^2) = 155$, and $Var(X) = E(X^2) - [E(X)]^2 = 155 - 9^2 = 74$.
+
+- Method 2: Conditional variance formula
+    1. Given $Y=y$ the conditional variance of $X$ is defined as $$Var(X|Y=y) = E[X^2|Y=y] - [E(X|Y=y)]^2$$
+    2. $Var(X|Y=y)$ is a function of $y$, say $h(y) = Var(X|Y=y)$.
+        > e.g. $X|Y=y \sim \text{Pois}(y)$, then $Var(X|Y=y) = y$.Hence $h(y) = y$.
+    3. Apply $h(y)$ to $Y$, we get $h(Y)$ and we denote $Var(X|Y) = h(Y)$.
+        > Note: We also have $Var(X|Y) = E[X^2|Y] - [E(X|Y)]^2$.
+        To find $Var(X|Y)$:
+        Step 1: Find $h(y)=Var(X|Y=y)$.
+        Step 2: Apply $h(y)$ to $Y$, we get $Var(X|Y)=h(Y)$.
+    4. Comments on $Var(X|Y=y)$
+        1. Substitution rule is still apllicable
+        2. If $X$ abd $Y$ are independent, then $Var(X|Y=y) = Var(X)$
+    5. Formula to calculate $Var(X)$
+        Theorem: Var(X) = $E[Var(X|Y)] + Var[E(X|Y)]$
+        Proof: $LHS = Var(X) = E(X^2) - [E(X)]^2$
+        $RHS = E[Var(X|Y)] + Var[E(X|Y)] = E[E(X^2|Y)]-E[E(X|Y)^2] + E[g(X)^2] - E[g(X)]^2 = E(X^2)-E(X)^2 = LHS$
+
+    > Example 3.9:
+    >- A coin is weighted such that $P(H) = 1/4$.
+    >- Let $N$ = number of tosses required to get 3 Hs by using the weighted coin.
+    >- Suppose that we toss a fair coin $N$ times. Let $X$ = number of Hs in the $N$ tosses.
+    >Find $E(X)$ and $Var(X)$.
+    >> Solution: $N \sim \text{NegBin}(3, 1/4)$ and $X|N=n \sim \text{Bin}(n, 1/2)$.
+    $E(X) = E[E(X|N)]=E(N/2)=E(N)/2 = 3/1/2 = 6$.
+    $E(X|N=n) = n/2 = g(n) \implies E(X|N)=g(N)=N/2$.
+    $Var(X) = E[Var(X|N)] + Var[E(X|N)]$
+    $Var(X|N=n) = n/4 = h(n) \implies Var(X|N)=h(N)=N/4$
+    Hence, $Var(X) = E[N/4]+Var(N/2) = \frac{E(N)}{4}+\frac{1}{4}Var(N)=\frac{3/\frac{1}{4}}{4}+\frac{1}{4}\frac{3(1-\frac{1}{4})}{(1/4)^2}=12$.
+
+- Method 3: Compound r.v. formula
+    1. Setup:
+        Suppose $X_1, X_2, ...$ are a sequence of iid rvs.
+        $N$: a non-negative r.v.
+        Further: $X_1, X_2, ...$ and $N$ are independent.
+        Then $W = \sum_{i=1}^{N}X_i$ is called a compound r.v.
+        [If $N=0$, then $W=0$.]
+    2. Result:
+        $E(W) = E(N)E(X_1)$
+        $Var(W) = E(N)Var(X_1) + Var(N)[E(X_1)]^2$
+        > Proof: $E(W) = E[E(W|N)]$
+        $E(W|N=n) = E[\sum_{i=1}^{n}X_i|N=n] = \sum_{i=1}^{n}E(X_i|N=n) = \sum_{i=1}^{n}E(X_1|N=n) = nE(X_1)$
+        Hence E(W|N) = $N E(X_1)$
+        $\implies E(W) = E[N E(X_1)] = E(N)E(X_1)$
+        $Var(W) = E[Var(W|N)] + Var[E(W|N)]$
+        $Var(W|N=n) = Var(\sum_{i=1}^{n}X_i|N=n) = \sum_{i=1}^{n}Var(X_i|N=n) = \sum_{i=1}^{n}Var(X_1|N=n) = nVar(X_1)$
+        Hence $Var(W) = E[Var(W|N)] + Var[E(W|N)] = E[N]Var(X_1) + Var(N)E(X_1)^2$
+    
+    > Example 3.10
+    >- A coin is weighted such that $P(H) = 1/4$.
+    >- Let $N$ = number of tosses required to get 3 Hs by using the weighted coin.
+    >- Suppose that we toss a fair coin $N$ times. Let $X$ = number of Hs in the $N$ tosses.
+    >Find $E(X)$ and $Var(X)$.
+    >> Solution: Let $X_i = \begin{cases} 1 & \text{if } i\text{th toss is H}\\ 0 & \text{if } i\text{th toss is T}\end{cases}$
+    $X=\sum_{i=1}^{N}X_i:X_1,X_2...\overset{\mathrm{iid}}{\sim}\text{Berloulli}\left(\frac{1}{2}\right)$ and $N \sim \text{NegBin}(3, 1/4)$.
+    Then, $E(X) = E(N)E(X_1) = \frac{3}{1/4}\cdot\frac{1}{2}=6$
+    $Var(X) = E(N)Var(X_1) + Var(N)[E(X_1)]^2 = \frac{3}{1/4}\cdot\frac{1}{2}\cdot\frac{1}{2}+\frac{1}{4}\cdot\frac{3\cdot(1-\frac{1}{4})}{1/4^2}\cdot\frac{1}{4}=12$.
+
+    > Example 3.11 (Example 3.7 continued; Final exam, Spring 2016)
+    >- $Y$ has pdf $f(y) = \begin{cases} ye^{-y} & y>0\\0&y\leq 0\end{cases}$.
+    >- $X|Y=y \sim \text{Pois}(y)$
+    Find $E(X)$ and $Var(X)$.
+    >> Solution: 
+    $E(X) = E[E(X|Y)] = E(Y) = \int_0^\infty f(y)dy = \int_0^\infty y^2e^{-y}dy$
+    $E(X|Y=y) = y$ since $X|Y=y \sim \text{Pois}(y)$.
+    Therefore $E(X|Y)=Y$, hence $E(X) = 2$.
+    $Var(X) = E[Var(X|Y)] + Var[E(X|Y)]$
+    $Var(X|Y=y) = y$ since $X|Y=y \sim \text{Pois}(y)$.
+    Therefore $Var(X|Y)=Y$.
+    Hence, $Var(X) = E(Y) + Var(Y) = E(Y)+E(Y^2)-[E(Y)]^2$,.
+    $E(Y^2) = \int_0^\infty y^3e^{-y}dy = \Gamma(4) = 3! = 6$.
+    $Var(X) = 2+6-2^2 = 4$.
+
+    > Example 3.12 (Question 3, Midterm 2017)
+    Suppose $Y\sim N(0,1)$ and $N\sim \text{Bin}(3,0.5)$. That is,
+    $P(N=0)=P(N=3)=\frac{1}{8}$, $P(N=1)=P(N=2)=\frac{3}{8}$.
+    We further assume that $Y$ and $N$ are independent. Define $X=Y^N$.
+    Find $E(X)$, $Var(X)$, and $P(X<0)$.
+    Note: $E(Y) = E(Y^3) = E(Y^5) = 0, E(Y^2) =1, E(Y^4) = 3, E(Y^6) = 15, and P(Y<0) = 0.5$.
+    >> Solution:
+    $E(X) = E[E(X|N)] = E(Y^N) = E(Y^N|N=0)P(N=0) + E(Y^N|N=1)P(N=1) + E(Y^N|N=2)P(N=2) + E(Y^N|N=3)P(N=3) = E(Y^0)P(N=0) + E(Y^1)P(N=1) + E(Y^2)P(N=2) + E(Y^3)P(N=3) = 1\cdot\frac{1}{8} + 0\cdot\frac{3}{8} + 1\cdot\frac{3}{8} + 0\cdot\frac{1}{8} = \frac{1}{2}$
+    Similarly, $E(X^2) = E[E(X^2|N)] = E(Y^{2N}) = E(Y^{2N}|N=0)P(N=0) + E(Y^{2N}|N=1)P(N=1) + E(Y^{2N}|N=2)P(N=2) + E(Y^{2N}|N=3)P(N=3) = E(Y^0)P(N=0) + E(Y^2)P(N=1) + E(Y^4)P(N=2) + E(Y^6)P(N=3) = 28/8 = \frac{7}{2}$.
+    $Var(X) = E(X^2) - [E(X)]^2 = \frac{7}{2} - \frac{1}{2}^2 = \frac{13}{4}$
+    P(X<0) = \sum_{n=0}^3 P(X<0|N=n)P(N=n) = \sum_{n=0}^3 P(Y^N<0|N=n)P(N=n) = \sum_{n=0}^3 P(Y^n<0|N=n)P(N=n) = P(Y^1<0)P(N=1) + P(Y^3<0)P(N=3) = 0.5\cdot\frac{3}{8} + 0.5\cdot\frac{1}{8} = \frac{1}{4}$.
+
+    > Example 3.13 (Question 3, Midterm 2019)
+    Suppose $X_1, X_2,...$ are a sequence of independent and identically distributed uniform random variables with probability density function $f(x) = \begin{cases} 1 & 0<x<1\\0&\text{otherwise}\end{cases}$. Let $Y$ be a continuous random variable with probability density function $g(y) = \begin{cases} 3y^2 & 0<y<1\\0&\text{otherwise}\end{cases}$. We further assume that $X_1, X_2,...$ and $Y$ are independent. Let $T = \min\{n \geq 1: X_n < Y\}$. That is, $T$ is the first time to get a smaller value than $Y$ in the sequence $\{X_n\}_{n=1}^\infty$.
+    > 1. Find $P(T=2) = P(X_1\geq Y, X_2<Y)$.
+    >> Solution: We condition on $Y$.
+    $P(T=2) = P(X_1\geq Y, X_2<Y) = \int_0^1 P(X_1\geq y, X_2<y|Y=y)f_Y(y)dy = \int_0^1 P(X_1\geq y|Y=y)P(X_2<y|Y=y)3y^2dy = \int_0^1 P(X_1\geq y)P(X_2<y)3y^2dy$
+    Here, $P(X_1\geq y) = \int_y^1f(x)dx = \int_y^1 1dx = 1-y$ and $P(X_2<y) = \int_0^yf(x)dx = \int_0^y 1dx = y$.
+    Hence, $P(T=2) = \int_0^1 (1-y)y3y^2dy = \int_0^1 3y^3-3y^4dy = \frac{3}{4}-\frac{3}{5} = \frac{3}{20}$.
+    > 2. Find $E(T)$.
+    >> Solution: We condition on $Y$.
+    Given $Y=y$, $T|Y=y$ = 1st time to get a smaller value than $y$ in the sequence $\{X_n\}_{n=1}^\infty$.
+    Note $P(X_1<y) = \int_0^yf(x)dx = \int_0^y 1dx = y$.
+    Hence, $T|Y=y \sim \text{Geo}(y)$.
+    $E(T|Y=y) = \frac{1}{y}$.
+    $E(T)=E[E(T|Y)]=\int_0^1 \frac{1}{y}3y^2dy = 3\int_0^1 ydy = \frac{3}{2}$.
+    > 3. Find $Var(T)$.
+    >> Solution:
+    $E(T^2)=E[E(T^2|Y)]=\int_0^1 E(T^2|Y=y)f_Y(y)dy$
+    $T|Y=y \sim \text{Geo}(y)$, hence $E(T^2|Y=y) = Var(T|Y=y) + [E(T|Y=y)]^2 = \frac{1-y}{y^2} + \frac{1}{y^2}$.
+    Hence,
+    $E(T^2)=\int_0^1 \frac{1-y}{y^2} + \frac{1}{y^2}3y^2dy = \int_0^1 3(2-y)dy = 6-\frac{3}{2} = \frac{9}{2}$.
+    $Var(T) = E(T^2) - [E(T)]^2 = \frac{9}{2} - (\frac{3}{2})^2 = \frac{9}{4}$.
