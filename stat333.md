@@ -293,7 +293,7 @@ $Var(X)=Var(I_1+I_2)=Var(I_1)+Var(I_2)+Cov(I_1,I_2)\\=P(I_1=1)P(I_1=0)+P(I_2=1)P
 Let $T_E$ = # of trials or waiting time to observe first E [including the trial to observe E]
     Range: $\{1,2,3,\dots\}\cup\{\infty\}$ where $\infty$ means $E$ never occurs.
 - Classification of $T_E$
-    1. If $P(T_E<\infty)<1$ or $P(T_E<\infty)=0$, then $T_E$ is improper.
+    1. If $P(T_E<\infty)<1$ or $P(T_E<\infty)>0$, then $T_E$ is improper.
         Note: In this case, $E(T_E)=\infty$ since $P(T_E<\infty)>0$.
     2. If $P(T_E<\infty)=1$ or $P(T_E<\infty)=0$, then $T_E$ is proper.
         1. If $P(T_E<\infty)=1$ and $E(T_E)=\infty$, then $T_E$ is null proper.
