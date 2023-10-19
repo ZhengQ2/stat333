@@ -675,3 +675,129 @@ Hence, $P(X_1<X_2<X_3) = \int_0^1 y(1-y)dy = \frac{1}{6}$
     Hence,
     $E(T^2)=\int_0^1 \frac{1-y}{y^2} + \frac{1}{y^2}3y^2dy = \int_0^1 3(2-y)dy = 6-\frac{3}{2} = \frac{9}{2}$.
     $Var(T) = E(T^2) - [E(T)]^2 = \frac{9}{2} - (\frac{3}{2})^2 = \frac{9}{4}$.
+    
+
+## Chapter 4: Probability generating function and its applications
+### 4.1 Generating function
+- Definition: Given a sequence of real #s, $\{a_n\}_{n=0}^\infty = \{a_0, a_1, ...\}$, define $A(s) = \sum_{n=0}^\infty a_ns^n$, which is called power series.
+    According to value of $\{a_n\}_{n=0}^\infty$, we have:
+    1. $A(s)$ only converges when $s=0$.
+    2. $A(s)$ converges when $|s| < R$ and diverges when $|s| > R$.
+    3. $A(s)$ converges when $|s| < \infty$, in which $R = \infty$.
+    When we have case 2 and case 3, we call $A(s)$ the generating function of $\{a_n\}_{n=0}^\infty$, and $R$ the convergence radius.
+    > Example:
+    > 1. $a_n = 1$ for $n \geq 0$. Then $A(s) = \sum_{n=0}^\infty s^n = \frac{1}{1-s}$, converges when $|s| < 1$ and diverges when $|s| > 1$ with $R=1$. This is case 2.
+    > Recall: $\sum_{n=1}^\infty s^n = \frac{s}{1-s}$.
+    > 2. $a_n = \frac{1}{n!}$ for $n \geq 0$. Then $A(s) = \sum_{n=0}^\infty \frac{s^n}{n!} = e^s$, converges when $|s| < \infty$ with $R=\infty$. This is case 3.
+
+- Theorem: There is one-to-one correspondence between $A(s)$ and $\{a_n\}_{n=0}^\infty$
+    1. Given $\{a_n\}_{n=0}^\infty$, we can uniquely determine $A(s)$.
+    2. Given $A(s)$, we can uniquely determine $\{a_n\}_{n=0}^\infty$:
+        $a_0 = A(0)$, and $a_n = \frac{A^{(n)}(0)}{n!}$, where $A^{(n)}(0)$ is the $n$th derivative of $A(s)$ evaluated at $s=0$.
+
+- Commonly used power series:
+    1. Geometric: $A(s) = \frac{1}{1-s} = \sum_{n=0}^\infty s^n$, $R=1$, $a_n = 1$ for $n \geq 0$.
+    2. Alternate geometric: $A(s) = \frac{1}{1+s} = \sum_{n=0}^\infty (-1)^ns^n$, $R=1$, $a_n = (-1)^n$ for $n \geq 0$.
+    3. Exponential: $A(s) = e^s = \sum_{n=0}^\infty \frac{s^n}{n!}$, $R=\infty$, $a_n = \frac{1}{n!}$ for $n \geq 0$.
+    4. Binomial: $A(s) = (1+s)^n = \sum_{n=0}^\infty \binom{n}{k}s^k$; n is a positive integer, $R=\infty$, $a_k = \binom{n}{k}$ for $k=0,1,...,n$.
+    5. General Binomial: $A(s) = (1+s)^\alpha = \sum_{n=0}^\infty \binom{\alpha}{n}s^n$; $\alpha$ is a real #, not positive integer, $R=1$, $a_k = \binom{\alpha}{n}$ for $n=0,1,...$.
+        Note: $\binom{\alpha}{n} = \frac{\alpha(\alpha-1)...(\alpha-n+1)}{n!}$.
+    > E.g. $A(s) = (1+s)^{-1}; \alpha = -1 = \sum_{n=0}^\infty {-1}^{n}s^n$, $a_n = (-1)^n$ for $n \geq 0$ using alternate geometric series.
+            If we use General Binomial: $a_n = \binom{-1}{n}$ for $n \geq 0$, $R=1$.
+            $\binom{-1}{n} = \frac{(-1)(-1-1)...(-1-n+1)}{n!} = \frac{(-1)^n\cdot 1\cdot 2\cdot...\cdot n}{n!} = (-1)^n$.
+    > E.g. $\alpha = -\frac{1}{2}$, check $\binom{-\frac{1}{2}}{n} = (-\frac{1}{4})^n\binom{2n}{n}$.
+    >> Solution: $\binom{\alpha}{n} = \frac{\alpha(\alpha-1)...(\alpha-n+1)}{n!}$. Therefore, $\binom{-\frac{1}{2}}{n} = \frac{(-\frac{1}{2})(-\frac{1}{2}-1)...(-\frac{1}{2}-n+1)}{n!} = (-\frac{1}{2})^n \frac{1\cdot3\cdot...\cdot(2n-1)}{n!} = (-\frac{1}{2})^n\frac{(2n)!}{n!(2\cdot 4 \cdot...\cdot 2n)} = \frac{(-\frac{1}{2})^n}{2^n}\frac{(2n)!}{n!n!} = (-\frac{1}{4})^n\binom{2n}{n}$.
+- Property of gfs
+1. Summation: If $A(s) = \sum_{n=0}^\infty a_ns^n$ and $B(s) = \sum_{n=0}^\infty b_ns^n$, then $C(s) = A(s) + B(s) = \sum_{n=0}^\infty (a_n+b_n)s^n$, $c_n = a_n+b_n$ for $n \geq 0$, and R_C = min(R_A, R_B); and $C(s) = A(s) - B(s) = \sum_{n=0}^\infty (a_n-b_n)s^n$, $c_n = a_n-b_n$ for $n \geq 0$, and R_C = min(R_A, R_B).
+2. Product: $C(s) = \sum_{n=0}^\infty c_ns^n = A(s)B(s) = (\sum_{n=0}^\infty a_ns^n)(\sum_{n=0}^\infty b_ns^n)$, $c_n = \sum_{k=0}^n a_kb_{n-k} = a_0b_n+...+a_nb_0$ , that is $C(s) = A(s)B(s) = \sum_{n=0}^\infty (\sum_{k=0}^n a_kb_{n-k})s^n = (\sum_{n=0}^\infty a_ns^n)(\sum_{n=0}^\infty b_ns^n)$, R_C = min(R_A, R_B).
+
+> Example 4.1:
+> Find the power series expansions of:
+> 1. $C(s) = \frac{1}{(1-s)(1+s)}$
+>> Solution: $C(s) = \frac{1}{(1-s)(1+s)} =\frac{1}{2}(\frac{1}{1-s}+\frac{1}{1+s})=\frac{1}{2}(\sum_{n=0}^\infty s^n + \sum_{n=0}^\infty (-1)^ns^n) = \sum_{n=0}^\infty \frac{1}{2}(1+(-1)^n)s^n$; $c_n = \frac{1}{2}(1+(-1)^n)$ for $n \geq 0$, $R_C = \min(1,1) = 1$.
+>> Exercise: Try to use product formula.
+> 2. $C(s) = \frac{1}{(1-s)^2}$
+>> Solution: $C(s) = \frac{1}{1-s}\cdot \frac{1}{1-s} = (\sum_{n=0}^\infty s^n)(\sum_{n=0}^\infty s^n)$. $c_n = \sum_{k=0}^\infty a_k b_{n-k} = n+1$ for $n \geq 0$, $R_C = \min(1,1) = 1$.
+>> Alternatively: $C(s) = \frac{1}{(1-s)^{-2}} = (1+(-s))^{-2} = \sum_{n=0}^\infty \binom{-2}{n} (-s)^n = \sum_{n=0}^\infty (-1)^n \binom{-2}{n}s^n$. $c_n = (-1)^n \binom{-2}{n} = (-1)^n \frac{(-2)(-2-1)...(-2-n+1)}{n!} = (-1)^n \frac{(-2)(-3)...(-n)}{n!} = (-1)^n \frac{(-1)^n 2\cdot 3\cdot...\cdot n}{n!} = n+1$ for $n \geq 0$, $R_C = \min(1,1) = 1$.
+
+### 4.2 Probability generating function
+- Definition
+    Suppose $X$ is a non-negative integer r.v. with range $= \{0,1,2,...\} \cup \{\infty\}$. Let $p_n = P(X=n)$ for $n = 0,1,2,...$, then $G_X(s) = \sum_{n=0}^\infty p_ns^n = \sum_{n=0}^\infty P(X=n)s^n$ is called the probability generating function (pgf) of $X$.
+    - If $X$ is proper, i.e. $P(X=\infty) = 0$, then $G_X(s) = \sum_{n=0}^\infty P(X=n)s^n = E[S^X]$.
+    - Comments: Convergence radius of $G_X(s)$:
+        G_X(1) = \sum_{n=0}^\infty P(X=n) = 1 - P(X=\infty) \leq 1.
+        Then, $|G_X(s)| = |\sum_{n=0}^\infty P(X=n)s^n| \leq \sum_{n=0}^\infty P(X=n)|s|^n \leq \sum_{n=0}^\infty p_n (|s| \leq 1) \leq 1 < \infty$.
+        That is, $G_X(s)$ converges when $|s| \leq 1 \implies R_X \geq 1$.
+
+- Properties of pgf
+    1. Why pgf?
+        If we have $G_X(s)$, we can recover $\{p_n\}_{n=0}^\infty$ where $p_n = P(X=n)$.
+        - Method 1: $P_0 = G_X(0) = P(X=0)$, and $p_n = \frac{G_X^{(n)}(0)}{n!} = P(X=n)$ for $n \geq 1$.
+        - Method 2: We can use properties of gfs and commonly used gfs to find $p_n=P(X-n)$.
+        Reasons for using pgf:
+        pgf helps to recover $P(X-n)$ for $n \geq 0$, but mgf cannot do that.
+    2. We can check if $X$ is proper or not.
+        Note $P(X<\infty) = \sum_{n=0}^\infty P(X=n) = \sum_{n=0}^\infty p_n$.
+        Recall $G_X(s) = \sum_{n=0}^\infty p_ns^n$ and $G_X(1) = \sum_{n=0}^\infty p_n$.
+        If $G_X(1) = 1$, then $X$ is proper, if $G_X(1) < 1$, then $X$ is not proper.
+    3. If $X$ is proper, then
+        $E(X) = G_X'(1)$
+        $Var(X) = G_X''(1) + G_X'(1) - [G_X'(1)]^2$
+        > Note: If $X$ is improper, then $E(X) = \infty$ and $Var(X) = \infty$.
+        Proof:
+        $G_X(s) = E(s^X)$ when proper, then $G'_X(s) = \frac{dE(s^X)}{ds} = E(\frac{ds^X}{ds}) = E(Xs^{X-1}) \implies G'_X(1) = E(X)$.
+        $G''_X(s) = \frac{dE(Xs^{X-1})}{ds} = E(\frac{dXs^{X-1}}{ds}) = E(X(X-1)s^{X-2}) \implies G''_X(1) = E(X(X-1)) = E(X^2-X) \implies E(X^2)=G''_X(1)+G'_X(1)$.
+        Therefore, $Var(X) = E(X^2) - [E(X)]^2 = G''_X(1)+G'_X(1) - [G'_X(1)]^2$.
+    4. Uniqueness theorem
+        Two rvs $X$ and $Y$ have same pgf iff $X$ and $Y$ have same distribution.
+        Application: use pgf to determine distribution type.
+    5. Independence property
+        If $X$ and $Y$ are independent, then G_{X+Y}(s) = G_X(s)G_Y(s).
+        $G_{X+Y}(s) = E(s^{X+Y}) = E(s^Xs^Y) = E(s^X)E(s^Y) = G_X(s)G_Y(s)$ when $X+Y$ is proper and independent.
+        Proof: Let $G_{X+Y}(s) = \sum_{n=0}^\infty P(X+Y=n)(n)s^n$, $c_n = P(X+Y=n)$ for $n \geq 0$.
+        $G_{X}(s) = \sum_{n=0}^\infty P(X=n)s^n$, $a_n = P(X=n)$ for $n \geq 0$.
+        $G_{Y}(s) = \sum_{n=0}^\infty P(Y=n)s^n$, $b_n = P(Y=n)$ for $n \geq 0$.
+        Now, $c_n=P(X+Y=n) = \sum_{k=0}^n P(X=k, Y=n-k) = \sum_{k=0}^n P(X=k)P(Y=n-k) = \sum_{k=0}^n a_kb_{n-k}$.
+        So $G_{X+Y}(s) = \sum_{n=0}^\infty c_ns^n = \sum_{n=0}^\infty \sum_{k=0}^n a_kb_{n-k}s^n = \sum_{n=0}^\infty \sum_{k=0}^n a_ks^kb_{n-k}s^{n-k} = (\sum_{n=0}^\infty a_ns^n)(\sum_{n=0}^\infty b_ns^n) = G_X(s)G_Y(s)$. $\qedsymbol$
+        In general:
+        If $X_1, X_2,...,X_n$ are independent, then $G_{X_1+X_2+...+X_n}(s) = G_{X_1}(s)G_{X_2}(s)...G_{X_n}(s)$.
+    > Example 4.2:
+    >> Note: For all 5 rvs, $E(X) < \infty \implies$ $X$ is short proper hence proper
+    > 1. Let $I_A$ be the indicator rv for an event $A$ with $P(A)=p$. Find the pgf of $I_A$.
+    >> Solution: $P(I_A=1)=p$ and $P(I_A=0)=q=1-p$. 
+    >> $G_{I_A}(s) = E(s^{I_A}) = P(I_A=0)s^0 + P(I_A=1)s^1 = ps+q$.
+    > 2. Suppose $X \sim \text{Bin}(n,p)$, find the pgf of $X$.
+    >> Solution: $X = \sum_{i=1}^n I_{i}$, where $I_i$ are iid $\text{Bernoulli}(p)$.
+    >> $G_X(s) = E(s^X) = E(s^{\sum_{i=1}^n I_i}) = E(\prod_{i=1}^n s^{I_i}) = \prod_{i=1}^n E(s^{I_i}) = \prod_{i=1}^n (ps+q) = (ps+q)^n$.
+    > 3. Suppose $X \sim \text{Geo}(p)$, find the pgf of $X$.
+    >> Solution: $P(X=n) = (1-p)^{n-1}p, n\geq 1$.
+    >> $G_X(s) = E(s^X) = \sum_{n=1}^\infty (1-p)^{n-1}ps^n = ps\sum_{n=1}^\infty [(1-p)s]^{n-1} = \frac{ps}{1-(1-p)s}$.
+    >> $|(1-p)s| < 1 \implies |s| < \frac{1}{1-p} \implies R_X = \frac{1}{1-p}$.
+    > 4. Suppose $X \sim \text{NegBin}(r,p)$, find the pgf of $X$.
+    >> Solution: $X = \sum_{i=1}^r X_i$, where $X_i$ are iid $\text{Geo}(p)$.
+    >> $G_X(s) = E(s^X) = E(s^{\sum_{i=1}^r X_i}) = E(\prod_{i=1}^r s^{X_i}) = \prod_{i=1}^r E(s^{X_i}) = \prod_{i=1}^r \frac{ps}{1-(1-p)s} = (\frac{ps}{1-(1-p)s})^r$.
+    > 5. Suppose $X \sim \text{Pois}(\lambda)$, find the pgf of $X$.
+    >> Solution: $P(X=n) = \frac{\lambda^n}{n!}e^{-\lambda}, n \geq 0$.
+    >> $G_X(s) = E(s^X) = \sum_{n=0}^\infty \frac{\lambda^n}{n!}e^{-\lambda}s^n = e^{-\lambda}\sum_{n=0}^\infty \frac{(\lambda s)^n}{n!} = e^{-\lambda}e^{\lambda s} = e^{\lambda(s-1)}$.
+    >> when $|\lambda s| < \infty \implies |s| < \infty \implies R_X = \infty$.
+
+    > Example 4.3
+    > Suppose $Y \sim \text{Pois}(\lambda)$ and $X|Y=y \sim \text{Bin}(y,p)$. Find $E(X)$ and pgf of $X$.
+    >> Solution: $E(X) = E[E(X|Y)]$.
+    >> $E(X|Y=y) = yp \implies E(X|Y) = Yp$.
+    >> Then, $E(X) = E(Yp) = pE(Y) = p\lambda < \infty$.
+    >> Therefore, E(X) is short proper, hence proper.
+    >> $G_X(s) = E(s^X) = E(E(s^X|Y))$.
+    >> $E(s^X|Y)$ is a pgf of Binomial rv, $E(s^X|Y=y) = (ps+q)^y$, therefore, $E(s^X|Y) = (ps+q)^Y$.
+    >> $G_X(s) = E[(ps+q)^Y]$. Let $t = ps+q$, then $G_X(s) = E(t^Y)$, which is the pgf of Poisson rv with parameter $\lambda t = \lambda(ps+q)$.
+    >> $G_X(s) = e^{\lambda(ps+q-1)} = e^{\lambda ps - \lambda p}$, then $X \sim \text{Pois}(\lambda p)$.
+
+    > Example 4.4
+    > Suppose we are given a function of the form $$G(s)=\frac{1}{4}\left(\frac{s^4}{1-\frac{3}{4}s}\right)$
+    > Show that $G(s)$ is a pgf and find $E(X)$.
+    >> Solution: We want to show that $G(s)$ is a pgf, therefore, we need to show: 1. $G(1)=1$, and 2. $G(s)= \sum_{n=0}^\infty p_ns^n$ for some sequence $\{p_n\}_{n=0}^\infty \geq 0$.
+    >> 1. $G(1) = \frac{1}{4}\left(\frac{1}{1-\frac{3}{4}}\right) = 1$.
+    >> 2. $G(s) = \frac{1}{4}\left(\frac{s^4}{1-\frac{3}{4}s}\right) = \sum_{m=0}^\infty \left(\frac{3}{4}\right)^m\frac{1}{4}s^{m+4} = \sum_{n=4}^\infty \left(\frac{3}{4}\right)^{n-4}\frac{1}{4}s^n$.
+    >> Therefore, $p_n = \left(\frac{3}{4}\right)^{n-4}\frac{1}{4}$ for $n \geq 4$, and $p_n = 0$ for $n < 4$. Thus, all $p_n \geq 0$.
+    >> $E(X) = G'(1)$.
+    >> $G'(s) = \frac{s^3(1-\frac{4}{3}s)-\frac{1}{4}s^4(-\frac{3}{4})}{(1-\frac{3}{4}s)^2} = 7$.
