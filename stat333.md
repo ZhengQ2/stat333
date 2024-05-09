@@ -10,6 +10,7 @@ We mainly cover:
     - Event
     - Probability function
 - Sample space:
+- 
 All possible outcomes of a random experiment.
     >e.g. Toss a coin twice: $S = \{(H,H), (H,T), (T,H), (T,T)\}$
 - Event
